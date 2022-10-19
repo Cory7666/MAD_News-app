@@ -10,4 +10,9 @@
     <string name="text_signup_action">Sign Up</string>
     <string name="text_already_registered_action">I\'m already registered</string>
     <string name="text_nevermind_action">Nevermind</string>
+    <string name="text_invalid_required_field">Required</string>
+    <string name="text_invalid_email">Invalid Email</string>
+    <string name="text_invalid_symbols_in_nickname">Invalid symbols</string>
+    <string name="text_invalid_length_short">Too short</string>
+    <string name="text_invalid_symbols_in_password">Invalid symbols</string>
 </resources>

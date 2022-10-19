@@ -9,4 +9,9 @@
     <string name="text_signup_action">Зарегистрироваться</string>
     <string name="text_already_registered_action">Я уже зарегистрирован</string>
     <string name="text_nevermind_action">Я передумал</string>
+    <string name="text_invalid_required_field">Необходимо заполнить</string>
+    <string name="text_invalid_email">Неверный адрес</string>
+    <string name="text_invalid_symbols_in_nickname">Неподходящие символы</string>
+    <string name="text_invalid_length_short">Нужно больше символов</string>
+    <string name="text_invalid_symbols_in_password">Неподходящие символы</string>
 </resources>
