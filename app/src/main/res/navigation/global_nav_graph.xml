@@ -24,7 +24,7 @@
         tools:layout="@layout/fragment_home_screen" />
     <fragment
         android:id="@+id/identificationScreen"
-        android:name="org.cory7666.newsapp.ui.IdentificationScreen"
+        android:name="org.cory7666.newsapp.ui.identification.IdentificationScreen"
         android:label="fragment_identification_screen"
         tools:layout="@layout/fragment_identification_screen">
         <action

@@ -6,7 +6,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import org.cory7666.newsapp.R
+import org.cory7666.newsapp.viewmodel.ActionBarViewModel
 
 @SuppressLint("CustomSplashScreen")
 class SplashScreen : Fragment()
@@ -15,7 +22,11 @@ class SplashScreen : Fragment()
     inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
   ): View?
   {
-    // Inflate the layout for this fragment
+    ViewModelProvider(this)[ActionBarViewModel::class.java].hide()
+    CoroutineScope(Dispatchers.Main).launch {
+      delay(1000)
+      findNavController().navigate(R.id.action_splashScreen_to_identificationScreen2)
+    }
     return inflater.inflate(R.layout.fragment_splash_screen, container, false)
   }
 }

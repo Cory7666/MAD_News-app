@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="text_nickname">Отображаемое имя</string>
+    <string name="text_email">Эл. почта</string>
+    <string name="text_password">Пароль</string>
+    <string name="text_signup">Регистрация</string>
+    <string name="text_login">Вход</string>
+    <string name="text_login_action">Войти</string>
+    <string name="text_signup_action">Зарегистрироваться</string>
+</resources>
