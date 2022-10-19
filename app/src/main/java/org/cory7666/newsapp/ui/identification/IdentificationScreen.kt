@@ -24,6 +24,7 @@ class IdentificationScreen : Fragment()
       R.layout.fragment_identification_screen, container, false
     )?.apply {
       val viewPager = findViewById<ViewPager2>(R.id.viewPager)
+
       viewPager.adapter = AuthenticationScreenViewAdapter(
         childFragmentManager,
         lifecycle,

@@ -8,4 +8,6 @@
     <string name="text_signup">Sign Up</string>
     <string name="text_login_action">Log In</string>
     <string name="text_signup_action">Sign Up</string>
+    <string name="text_already_registered_action">I\'m already registered</string>
+    <string name="text_nevermind_action">Nevermind</string>
 </resources>
