@@ -1,7 +1,8 @@
-package org.cory7666.newsapp
+package org.cory7666.newsapp.ui
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
+import org.cory7666.newsapp.R
 
 class MainActivity : AppCompatActivity()
 {
