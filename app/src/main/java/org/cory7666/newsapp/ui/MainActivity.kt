@@ -16,6 +16,7 @@ class MainActivity : AppCompatActivity(), LifecycleOwner
 
     val actionBarViewModel =
       ViewModelProvider(this)[ActionBarViewModel::class.java]
+    ViewModelProvider(this, MainActivityViewModelFactory())
     actionBarViewModel.hidden.observe(this) {
       if (it)
       {

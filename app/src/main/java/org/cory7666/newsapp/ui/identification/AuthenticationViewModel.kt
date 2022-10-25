@@ -6,15 +6,14 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import org.cory7666.newsapp.R
 import org.cory7666.newsapp.data.ExecutionResult
-import org.cory7666.newsapp.data.TemporaryUserRepository
 import org.cory7666.newsapp.data.UserRepository
 import org.cory7666.newsapp.data.utils.validation.exception.InvalidLengthException
 import org.cory7666.newsapp.data.utils.validation.exception.InvalidSymbolsException
 
-class AuthenticationViewModel(private val context: Context?) : ViewModel()
+class AuthenticationViewModel(
+  private val repository: UserRepository, private val context: Context?
+) : ViewModel()
 {
-  private val repository: UserRepository = TemporaryUserRepository()
-
   private val _nicknameHint = MutableLiveData<String?>(null)
   private val _emailHint = MutableLiveData<String?>(null)
   private val _passwordHint = MutableLiveData<String?>(null)
