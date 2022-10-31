@@ -37,34 +37,36 @@ class LoginScreen : Fragment()
 
     if (view != null)
     {
-      view.findViewById<Button>(R.id.buttonPrevScreen).setOnClickListener {
+      val emailField = view.findViewById<TextInputLayout>(R.id.tilEmail)
+      val passwordField = view.findViewById<TextInputLayout>(R.id.tilPassword)
+      val actionButton = view.findViewById<Button>(R.id.buttonAction)
+
+      view.findViewById<Button>(R.id.buttonPrevScreen)?.setOnClickListener {
         activity?.findViewById<ViewPager2>(R.id.viewPager)?.apply {
           currentItem -= 1
         }
       }
 
-      view.findViewById<TextInputLayout>(R.id.tilEmail)?.let {
-        it.editText?.setOnFocusChangeListener { view, focused ->
-          if (!focused && view is TextInputEditText)
-          {
-            viewModel.validateEmail(view.text.toString())
-          }
-        }
-        viewModel.emailHint.observe(this.viewLifecycleOwner) { value ->
-          it.error = value
+
+      emailField.editText?.setOnFocusChangeListener { thisView, focused ->
+        if (!focused && thisView is TextInputEditText)
+        {
+          viewModel.validateEmail(thisView.text.toString())
         }
       }
+      viewModel.emailHint.observe(this.viewLifecycleOwner) { value ->
+        emailField.error = value
+      }
 
-      view.findViewById<TextInputLayout>(R.id.tilPassword)?.let {
-        it.editText?.setOnFocusChangeListener { view, focused ->
-          if (!focused && view is TextInputEditText)
-          {
-            viewModel.validatePassword(view.text.toString())
-          }
+
+      passwordField.editText?.setOnFocusChangeListener { thisView, focused ->
+        if (!focused && thisView is TextInputEditText)
+        {
+          viewModel.validatePassword(thisView.text.toString())
         }
-        viewModel.passwordHint.observe(this.viewLifecycleOwner) { value ->
-          it.error = value
-        }
+      }
+      viewModel.passwordHint.observe(this.viewLifecycleOwner) { value ->
+        passwordField.error = value
       }
     }
 
