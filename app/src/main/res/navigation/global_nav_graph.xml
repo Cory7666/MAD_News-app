@@ -11,10 +11,10 @@
         android:label="fragment_splash_screen"
         tools:layout="@layout/fragment_splash_screen">
         <action
-            android:id="@+id/action_splashScreen_to_homeScreen2"
+            android:id="@+id/action_splashScreen_to_homeScreen"
             app:destination="@id/homeScreen" />
         <action
-            android:id="@+id/action_splashScreen_to_identificationScreen2"
+            android:id="@+id/action_splashScreen_to_identificationScreen"
             app:destination="@id/identificationScreen" />
     </fragment>
     <fragment

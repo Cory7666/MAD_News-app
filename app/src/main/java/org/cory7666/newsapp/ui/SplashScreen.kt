@@ -31,12 +31,12 @@ class SplashScreen : Fragment()
         )[MainActivityViewModel::class.java].repository.isLoggedIn()
       )
       {
-        findNavController().navigate(R.id.action_splashScreen_to_homeScreen2)
+        findNavController().navigate(R.id.action_splashScreen_to_homeScreen)
       }
       else
       {
         findNavController().navigate(
-          R.id.action_splashScreen_to_identificationScreen2
+          R.id.action_splashScreen_to_identificationScreen
         )
       }
     }
