@@ -14,4 +14,5 @@
     <string name="text_invalid_symbols_in_nickname">Неподходящие символы</string>
     <string name="text_invalid_length_short">Нужно больше символов</string>
     <string name="text_invalid_symbols_in_password">Неподходящие символы</string>
+    <string name="text_fill_required_fields">Заполните необходимые поля</string>
 </resources>

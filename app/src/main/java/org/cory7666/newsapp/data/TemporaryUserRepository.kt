@@ -7,6 +7,8 @@ import org.cory7666.newsapp.data.utils.validation.PasswordValidator
 
 class TemporaryUserRepository : UserRepository
 {
+  private var isLoggedIn: Boolean = false
+
   override fun validateNickname(x: String): ExecutionResult
   {
     return try
@@ -48,11 +50,40 @@ class TemporaryUserRepository : UserRepository
 
   override fun login(data: LoginRequiredData): ExecutionResult
   {
+    return try
+    {
+      EmailValidator(data.email).validate()
+      PasswordValidator(data.password).validate()
+
+      if (data.email == "alex@localhost.com" && data.password == "123456")
+      {
+        isLoggedIn = true
+        ExecutionResult.Success()
+      }
+      else
+      {
+        ExecutionResult.Error(message = "Incorrect Login Data")
+      }
+    }
+    catch (ex: Exception)
+    {
+      ExecutionResult.Error(message = "Incorrect Login Data", exception = ex)
+    }
+  }
+
+  override fun register(data: LoginRequiredData): ExecutionResult
+  {
     return ExecutionResult.Success()
   }
 
-  override fun authenticate(loginRequiredData: LoginRequiredData): ExecutionResult
+  override fun isLoggedIn(): Boolean
   {
+    return isLoggedIn
+  }
+
+  override fun logout(): ExecutionResult
+  {
+    isLoggedIn = false
     return ExecutionResult.Success()
   }
 }

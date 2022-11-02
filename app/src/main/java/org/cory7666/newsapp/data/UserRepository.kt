@@ -8,5 +8,7 @@ interface UserRepository
   fun validateEmail(x: String): ExecutionResult
   fun validatePassword(x: String): ExecutionResult
   fun login(data: LoginRequiredData): ExecutionResult
-  fun authenticate(data: LoginRequiredData): ExecutionResult
+  fun register(data: LoginRequiredData): ExecutionResult
+  fun isLoggedIn(): Boolean
+  fun logout(): ExecutionResult
 }
