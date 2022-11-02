@@ -7,6 +7,8 @@ import androidx.lifecycle.ViewModel
 import org.cory7666.newsapp.R
 import org.cory7666.newsapp.data.ExecutionResult
 import org.cory7666.newsapp.data.UserRepository
+import org.cory7666.newsapp.data.model.LoginRequiredData
+import org.cory7666.newsapp.data.model.RegistrationRequiredData
 import org.cory7666.newsapp.data.utils.validation.exception.InvalidLengthException
 import org.cory7666.newsapp.data.utils.validation.exception.InvalidSymbolsException
 
@@ -17,6 +19,8 @@ class AuthenticationViewModel(
   private val _nicknameHint = MutableLiveData<String?>(null)
   private val _emailHint = MutableLiveData<String?>(null)
   private val _passwordHint = MutableLiveData<String?>(null)
+  private val _toastMessage = MutableLiveData<String>("")
+  private val _isUserLoggedIn = MutableLiveData<Boolean>(false)
 
   val nicknameHint: LiveData<String?>
     get() = _nicknameHint
@@ -24,6 +28,10 @@ class AuthenticationViewModel(
     get() = _emailHint
   val passwordHint: LiveData<String?>
     get() = _passwordHint
+  val toastMessage: LiveData<String>
+    get() = _toastMessage
+  val isUserLoggedIn: LiveData<Boolean>
+    get() = _isUserLoggedIn
 
   fun validateNickname(x: String?)
   {
@@ -33,7 +41,7 @@ class AuthenticationViewModel(
     }
     else
     {
-      when (val result = repository.validateNickname(x))
+      when (repository.validateNickname(x))
       {
         is ExecutionResult.Error   -> context?.getString(R.string.text_invalid_symbols_in_nickname)
         is ExecutionResult.Success -> null
@@ -74,6 +82,55 @@ class AuthenticationViewModel(
           is InvalidSymbolsException -> context?.getString(R.string.text_invalid_symbols_in_password)
           else                       -> context?.getString(R.string.text_invalid_symbols_in_password)
         }
+      }
+    }
+  }
+
+  fun tryLogin(email: String?, password: String?)
+  {
+    if (email == null || password == null || email.isEmpty() || password.isEmpty())
+    {
+      _toastMessage.value =
+        context?.getString(R.string.text_fill_required_fields)
+    }
+    else
+    {
+      when (val result =
+        repository.login(LoginRequiredData(email = email, password = password)))
+      {
+        is ExecutionResult.Success ->
+        {
+          _toastMessage.value = "Logged in as ${email}."
+          _isUserLoggedIn.value = true
+        }
+        is ExecutionResult.Error   -> _toastMessage.value =
+          result.message ?: "Error!"
+      }
+    }
+  }
+
+  fun tryRegister(nickname: String?, email: String?, password: String?)
+  {
+    if (nickname == null || nickname.isEmpty() || email == null || email.isEmpty() || password == null || password.isEmpty())
+    {
+      _toastMessage.value =
+        context?.getString(R.string.text_fill_required_fields)
+    }
+    else
+    {
+      when (val result = repository.register(
+        RegistrationRequiredData(
+          nickname = nickname, email = email, password = password
+        )
+      ))
+      {
+        is ExecutionResult.Success ->
+        {
+          _toastMessage.value = "Registered as ${email}."
+          _isUserLoggedIn.value = true
+        }
+        is ExecutionResult.Error   -> _toastMessage.value =
+          result.message ?: "Error!"
       }
     }
   }

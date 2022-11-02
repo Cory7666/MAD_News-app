@@ -73,6 +73,7 @@ class TemporaryUserRepository : UserRepository
 
   override fun register(data: LoginRequiredData): ExecutionResult
   {
+    isLoggedIn = true
     return ExecutionResult.Success()
   }
 
