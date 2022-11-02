@@ -11,8 +11,6 @@ import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import org.cory7666.newsapp.R
-import org.cory7666.newsapp.ui.MainActivityViewModel
-import org.cory7666.newsapp.ui.MainActivityViewModelFactory
 
 class RegistrationScreen : Fragment()
 {
@@ -22,13 +20,8 @@ class RegistrationScreen : Fragment()
     inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
   ): View?
   {
-    val activityViewModel = ViewModelProvider(
-      requireActivity(), MainActivityViewModelFactory()
-    )[MainActivityViewModel::class.java]
-
     viewModel = ViewModelProvider(
-      this,
-      AuthenticationViewModelFactory(activityViewModel.repository, context)
+      requireParentFragment()
     )[AuthenticationViewModel::class.java]
 
     val view = inflater.inflate(
@@ -78,6 +71,15 @@ class RegistrationScreen : Fragment()
       }
       viewModel.passwordHint.observe(this.viewLifecycleOwner) { value ->
         passwordField.error = value
+      }
+
+
+      actionButton.setOnClickListener {
+        viewModel.tryRegister(
+          nickname = nicknameField?.editText?.text.toString(),
+          email = emailField?.editText?.text.toString(),
+          password = passwordField.editText?.text.toString()
+        )
       }
     }
 

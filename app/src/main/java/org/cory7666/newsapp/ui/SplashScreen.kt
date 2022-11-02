@@ -24,8 +24,21 @@ class SplashScreen : Fragment()
   {
     ViewModelProvider(this)[ActionBarViewModel::class.java].hide()
     CoroutineScope(Dispatchers.Main).launch {
-      delay(1000)
-      findNavController().navigate(R.id.action_splashScreen_to_identificationScreen2)
+      delay(500)
+
+      if (ViewModelProvider(
+          this@SplashScreen.requireActivity(), MainActivityViewModelFactory()
+        )[MainActivityViewModel::class.java].repository.isLoggedIn()
+      )
+      {
+        findNavController().navigate(R.id.action_splashScreen_to_homeScreen2)
+      }
+      else
+      {
+        findNavController().navigate(
+          R.id.action_splashScreen_to_identificationScreen2
+        )
+      }
     }
     return inflater.inflate(R.layout.fragment_splash_screen, container, false)
   }

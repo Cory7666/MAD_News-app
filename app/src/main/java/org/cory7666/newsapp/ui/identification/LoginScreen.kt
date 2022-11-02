@@ -11,8 +11,6 @@ import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import org.cory7666.newsapp.R
-import org.cory7666.newsapp.ui.MainActivityViewModel
-import org.cory7666.newsapp.ui.MainActivityViewModelFactory
 
 class LoginScreen : Fragment()
 {
@@ -22,14 +20,8 @@ class LoginScreen : Fragment()
     inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
   ): View?
   {
-    val activityViewModel = ViewModelProvider(
-      requireActivity(), MainActivityViewModelFactory()
-    )[MainActivityViewModel::class.java]
-
     viewModel = ViewModelProvider(
-      this, AuthenticationViewModelFactory(
-        repository = activityViewModel.repository, context = context
-      )
+      requireParentFragment()
     )[AuthenticationViewModel::class.java]
 
     val view =
@@ -67,6 +59,14 @@ class LoginScreen : Fragment()
       }
       viewModel.passwordHint.observe(this.viewLifecycleOwner) { value ->
         passwordField.error = value
+      }
+
+
+      actionButton.setOnClickListener {
+        viewModel.tryLogin(
+          email = emailField?.editText?.text.toString(),
+          password = passwordField.editText?.text.toString()
+        )
       }
     }
 
