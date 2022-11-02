@@ -2,7 +2,7 @@ package org.cory7666.newsapp.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import org.cory7666.newsapp.data.TemporaryUserRepository
+import org.cory7666.newsapp.data.utils.validation.FirebaseUserRepository
 
 class MainActivityViewModelFactory : ViewModelProvider.Factory
 {
@@ -10,7 +10,7 @@ class MainActivityViewModelFactory : ViewModelProvider.Factory
   {
     if (modelClass.isAssignableFrom(MainActivityViewModel::class.java))
     {
-      @Suppress("UNCHECKED_CAST") return MainActivityViewModel(repository = TemporaryUserRepository()) as T
+      @Suppress("UNCHECKED_CAST") return MainActivityViewModel(repository = FirebaseUserRepository()) as T
     }
     else
     {

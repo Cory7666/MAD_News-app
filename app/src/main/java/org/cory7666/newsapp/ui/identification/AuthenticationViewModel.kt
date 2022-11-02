@@ -1,6 +1,7 @@
 package org.cory7666.newsapp.ui.identification
 
 import android.content.Context
+import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -45,6 +46,7 @@ class AuthenticationViewModel(
       {
         is ExecutionResult.Error   -> context?.getString(R.string.text_invalid_symbols_in_nickname)
         is ExecutionResult.Success -> null
+        else                       -> null
       }
     }
   }
@@ -61,6 +63,7 @@ class AuthenticationViewModel(
       {
         is ExecutionResult.Success -> null
         is ExecutionResult.Error   -> context?.getString(R.string.text_invalid_email)
+        else                       -> null
       }
     }
   }
@@ -82,6 +85,7 @@ class AuthenticationViewModel(
           is InvalidSymbolsException -> context?.getString(R.string.text_invalid_symbols_in_password)
           else                       -> context?.getString(R.string.text_invalid_symbols_in_password)
         }
+        else                       -> null
       }
     }
   }
@@ -104,7 +108,18 @@ class AuthenticationViewModel(
           _isUserLoggedIn.value = true
         }
         is ExecutionResult.Error   -> _toastMessage.value =
-          result.message ?: "Error!"
+          result.exception?.message ?: result.message ?: "Error!"
+        is ExecutionResult.Task<*> ->
+        {
+          result.task.addOnSuccessListener {
+            Toast.makeText(context, "Done!", Toast.LENGTH_SHORT).show()
+            _isUserLoggedIn.value = true
+          }.addOnFailureListener { ex ->
+            Toast
+              .makeText(context, "Error: ${ex.message}.", Toast.LENGTH_LONG)
+              .show()
+          }
+        }
       }
     }
   }
@@ -131,6 +146,17 @@ class AuthenticationViewModel(
         }
         is ExecutionResult.Error   -> _toastMessage.value =
           result.message ?: "Error!"
+        is ExecutionResult.Task<*> ->
+        {
+          result.task.addOnSuccessListener {
+            Toast.makeText(context, "Done!", Toast.LENGTH_SHORT).show()
+            _isUserLoggedIn.value = true
+          }.addOnFailureListener { ex ->
+            Toast
+              .makeText(context, "Error: ${ex.message}.", Toast.LENGTH_LONG)
+              .show()
+          }
+        }
       }
     }
   }
