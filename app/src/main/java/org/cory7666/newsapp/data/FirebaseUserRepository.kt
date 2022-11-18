@@ -1,14 +1,15 @@
 package org.cory7666.newsapp.data
 
+import com.google.firebase.auth.UserProfileChangeRequest
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import org.cory7666.newsapp.data.model.LoginRequiredData
 import org.cory7666.newsapp.data.model.RegistrationRequiredData
 import org.cory7666.newsapp.data.utils.validation.UserPersonalData
 import org.cory7666.newsapp.data.utils.validation.ValidationResult
 
-class TemporaryUserRepository : UserRepository<ValidationResult, ExecutionResult>
+class FirebaseUserRepository : UserRepository<ValidationResult, ExecutionResult>
 {
-  private var isLoggedIn: Boolean = false
-
   override fun validateNickname(x: String): ValidationResult
   {
     return UserPersonalData(x).checkNickname()
@@ -26,31 +27,33 @@ class TemporaryUserRepository : UserRepository<ValidationResult, ExecutionResult
 
   override fun login(data: LoginRequiredData): ExecutionResult
   {
-    return if (data.email == "alex@localhost.com" && data.password == "123456")
-    {
-      isLoggedIn = true
-      ExecutionResult.Success()
-    }
-    else
-    {
-      ExecutionResult.Error(message = "Incorrect Login Data")
-    }
+    return ExecutionResult.Task(
+      Firebase.auth.signInWithEmailAndPassword(data.email, data.password)
+    )
   }
 
   override fun register(data: RegistrationRequiredData): ExecutionResult
   {
-    isLoggedIn = true
-    return ExecutionResult.Success()
+    return ExecutionResult.Task(Firebase.auth
+      .createUserWithEmailAndPassword(data.email, data.password)
+      .addOnSuccessListener {
+        val profileChangeRequest =
+          UserProfileChangeRequest
+            .Builder()
+            .setDisplayName(data.nickname)
+            .build()
+        Firebase.auth.currentUser?.updateProfile(profileChangeRequest)
+      })
   }
 
   override fun isLoggedIn(): Boolean
   {
-    return isLoggedIn
+    return Firebase.auth.currentUser != null
   }
 
   override fun logout(): ExecutionResult
   {
-    isLoggedIn = false
+    Firebase.auth.signOut()
     return ExecutionResult.Success()
   }
 }

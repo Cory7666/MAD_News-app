@@ -1,8 +1,8 @@
-package org.cory7666.newsapp.ui
+package org.cory7666.newsapp.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import org.cory7666.newsapp.data.utils.validation.FirebaseUserRepository
+import org.cory7666.newsapp.data.FirebaseUserRepository
 
 class MainActivityViewModelFactory : ViewModelProvider.Factory
 {

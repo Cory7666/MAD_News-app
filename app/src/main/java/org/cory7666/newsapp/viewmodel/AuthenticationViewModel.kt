@@ -1,4 +1,4 @@
-package org.cory7666.newsapp.ui.identification
+package org.cory7666.newsapp.viewmodel
 
 import android.content.Context
 import android.widget.Toast
@@ -10,11 +10,11 @@ import org.cory7666.newsapp.data.ExecutionResult
 import org.cory7666.newsapp.data.UserRepository
 import org.cory7666.newsapp.data.model.LoginRequiredData
 import org.cory7666.newsapp.data.model.RegistrationRequiredData
-import org.cory7666.newsapp.data.utils.validation.exception.InvalidLengthException
-import org.cory7666.newsapp.data.utils.validation.exception.InvalidSymbolsException
+import org.cory7666.newsapp.data.utils.validation.ValidationResult
 
 class AuthenticationViewModel(
-  private val repository: UserRepository, private val context: Context?
+  private val repository: UserRepository<ValidationResult, ExecutionResult>,
+  private val context: Context?
 ) : ViewModel()
 {
   private val _nicknameHint = MutableLiveData<String?>(null)
@@ -44,9 +44,8 @@ class AuthenticationViewModel(
     {
       when (repository.validateNickname(x))
       {
-        is ExecutionResult.Error   -> context?.getString(R.string.text_invalid_symbols_in_nickname)
-        is ExecutionResult.Success -> null
-        else                       -> null
+        ValidationResult.Success -> null
+        else                     -> context?.getString(R.string.text_invalid_symbols_in_nickname)
       }
     }
   }
@@ -61,31 +60,25 @@ class AuthenticationViewModel(
     {
       when (repository.validateEmail(x))
       {
-        is ExecutionResult.Success -> null
-        is ExecutionResult.Error   -> context?.getString(R.string.text_invalid_email)
-        else                       -> null
+        ValidationResult.Success -> null
+        else                     -> context?.getString(R.string.text_invalid_email)
       }
     }
   }
 
   fun validatePassword(x: String?)
   {
-    _passwordHint.value = if (x == null || x.isEmpty())
+    _passwordHint.value = if (x.isNullOrEmpty())
     {
       context?.getString(R.string.text_invalid_required_field)
     }
     else
     {
-      when (val result = repository.validatePassword(x))
+      when (repository.validatePassword(x))
       {
-        is ExecutionResult.Success -> null
-        is ExecutionResult.Error   -> when (result.exception)
-        {
-          is InvalidLengthException  -> context?.getString(R.string.text_invalid_length_short)
-          is InvalidSymbolsException -> context?.getString(R.string.text_invalid_symbols_in_password)
-          else                       -> context?.getString(R.string.text_invalid_symbols_in_password)
-        }
-        else                       -> null
+        ValidationResult.Success           -> null
+        ValidationResult.TooShort          -> context?.getString(R.string.text_invalid_length_short)
+        ValidationResult.UnresolvedSymbols -> context?.getString(R.string.text_invalid_symbols_in_password)
       }
     }
   }

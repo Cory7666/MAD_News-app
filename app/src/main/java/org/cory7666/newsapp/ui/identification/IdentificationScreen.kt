@@ -11,9 +11,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.widget.ViewPager2
 import org.cory7666.newsapp.R
-import org.cory7666.newsapp.ui.MainActivityViewModel
-import org.cory7666.newsapp.ui.MainActivityViewModelFactory
-import org.cory7666.newsapp.viewmodel.ActionBarViewModel
+import org.cory7666.newsapp.viewmodel.*
 
 class IdentificationScreen : Fragment()
 {

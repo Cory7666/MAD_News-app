@@ -14,6 +14,8 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.cory7666.newsapp.R
 import org.cory7666.newsapp.viewmodel.ActionBarViewModel
+import org.cory7666.newsapp.viewmodel.MainActivityViewModel
+import org.cory7666.newsapp.viewmodel.MainActivityViewModelFactory
 
 @SuppressLint("CustomSplashScreen")
 class SplashScreen : Fragment()

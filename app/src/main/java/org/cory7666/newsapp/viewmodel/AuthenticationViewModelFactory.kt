@@ -1,12 +1,15 @@
-package org.cory7666.newsapp.ui.identification
+package org.cory7666.newsapp.viewmodel
 
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import org.cory7666.newsapp.data.ExecutionResult
 import org.cory7666.newsapp.data.UserRepository
+import org.cory7666.newsapp.data.utils.validation.ValidationResult
 
 class AuthenticationViewModelFactory(
-  private val repository: UserRepository, private val context: Context?
+  private val repository: UserRepository<ValidationResult, ExecutionResult>,
+  private val context: Context?
 ) : ViewModelProvider.Factory
 {
   override fun <T : ViewModel> create(modelClass: Class<T>): T

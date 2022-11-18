@@ -13,6 +13,7 @@ import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import org.cory7666.newsapp.R
+import org.cory7666.newsapp.viewmodel.AuthenticationViewModel
 
 class RegistrationScreen : Fragment()
 {
@@ -84,9 +85,7 @@ class RegistrationScreen : Fragment()
         )
       }
 
-      view.setOnClickListener {
-        hideKeyboard()
-      }
+      bindOnBackgroundClickAction(view)
     }
 
     return view
@@ -98,4 +97,12 @@ class RegistrationScreen : Fragment()
       requireView().windowToken, 0
     )
   }
+
+  private fun bindOnBackgroundClickAction(view: View)
+  {
+    view.setOnClickListener {
+      hideKeyboard()
+    }
+  }
+
 }
