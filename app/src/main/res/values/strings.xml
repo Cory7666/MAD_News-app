@@ -16,4 +16,9 @@
     <string name="text_invalid_length_short">Too short</string>
     <string name="text_invalid_symbols_in_password">Invalid symbols</string>
     <string name="text_fill_required_fields">Fill required fields</string>
+    <string name="text_signed_in_as">Signed in as</string>
+    <string name="text_registered_as">Registered as</string>
+    <string name="text_incorrect_registration_data">Incorrect registration data</string>
+    <string name="text_incorrect_sign_in_data">Incorrect sign in data</string>
+    <string name="text_error">Error</string>
 </resources>

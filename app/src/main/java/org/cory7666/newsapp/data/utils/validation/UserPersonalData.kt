@@ -50,7 +50,7 @@ class UserPersonalData(private val data: String) : UserDataValidating
     private val emailPattern: Pattern =
       Pattern.compile("^[\\w.]*@.*\\..{2,10}\$")
     private val passwordSymbolSequencePattern: Pattern =
-      Pattern.compile("^[\\d]*$")
-    private const val minimalPasswordLength: Int = 5
+      Pattern.compile("^[\\w]*$")
+    private const val minimalPasswordLength: Int = 6
   }
 }

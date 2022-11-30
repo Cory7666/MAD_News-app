@@ -10,7 +10,6 @@ import android.widget.Button
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager2.widget.ViewPager2
-import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import org.cory7666.newsapp.R
 import org.cory7666.newsapp.viewmodel.AuthenticationViewModel
@@ -39,38 +38,32 @@ class RegistrationScreen : Fragment()
       val actionButton = view.findViewById<Button>(R.id.buttonAction)
 
       view.findViewById<Button>(R.id.buttonNextScreen)?.setOnClickListener {
+        nicknameField.editText?.text = null
+        emailField.editText?.text = null
+        passwordField.editText?.text = null
         activity?.findViewById<ViewPager2>(R.id.viewPager)?.apply {
-          currentItem += 1
+          setCurrentItem(currentItem + 1, false)
         }
       }
 
-      nicknameField.editText?.setOnFocusChangeListener { thisView, focused ->
-        if (!focused && thisView is TextInputEditText)
-        {
-          viewModel.validateNickname(thisView.text.toString())
-        }
+      nicknameField.editText?.setOnFocusChangeListener { _, _ ->
+        nicknameField.error = null
       }
       viewModel.nicknameHint.observe(this.viewLifecycleOwner) { value ->
         nicknameField.error = value
       }
 
 
-      emailField.editText?.setOnFocusChangeListener { thisView, focused ->
-        if (!focused && thisView is TextInputEditText)
-        {
-          viewModel.validateEmail(thisView.text.toString())
-        }
+      emailField.editText?.setOnFocusChangeListener { _, _ ->
+        emailField.error = null
       }
       viewModel.emailHint.observe(this.viewLifecycleOwner) { value ->
         emailField.error = value
       }
 
 
-      passwordField.editText?.setOnFocusChangeListener { thisView, focused ->
-        if (!focused && thisView is TextInputEditText)
-        {
-          viewModel.validatePassword(thisView.text.toString())
-        }
+      passwordField.editText?.setOnFocusChangeListener { _, _ ->
+        passwordField.error = null
       }
       viewModel.passwordHint.observe(this.viewLifecycleOwner) { value ->
         passwordField.error = value
@@ -78,6 +71,9 @@ class RegistrationScreen : Fragment()
 
 
       actionButton.setOnClickListener {
+        viewModel.validateNickname(nicknameField.editText?.text.toString())
+        viewModel.validateEmail(emailField.editText?.text.toString())
+        viewModel.validatePassword(passwordField.editText?.text.toString())
         viewModel.tryRegister(
           nickname = nicknameField?.editText?.text.toString(),
           email = emailField?.editText?.text.toString(),

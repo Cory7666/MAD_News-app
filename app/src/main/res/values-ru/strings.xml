@@ -15,4 +15,9 @@
     <string name="text_invalid_length_short">Нужно больше символов</string>
     <string name="text_invalid_symbols_in_password">Неподходящие символы</string>
     <string name="text_fill_required_fields">Заполните необходимые поля</string>
+    <string name="text_signed_in_as">Вошли как</string>
+    <string name="text_registered_as">Зарегистрирован как</string>
+    <string name="text_incorrect_registration_data">Данные для регистрации неверны</string>
+    <string name="text_incorrect_sign_in_data">Данные для входа неверны</string>
+    <string name="text_error">Ошибка</string>
 </resources>

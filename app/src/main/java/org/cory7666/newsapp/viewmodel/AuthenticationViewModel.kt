@@ -90,6 +90,14 @@ class AuthenticationViewModel(
       _toastMessage.value =
         context?.getString(R.string.text_fill_required_fields)
     }
+    else if (repository.validateEmail(email) != ValidationResult.Success || repository.validatePassword(
+        password
+      ) != ValidationResult.Success
+    )
+    {
+      _toastMessage.value =
+        context?.getString(R.string.text_incorrect_sign_in_data)
+    }
     else
     {
       when (val result =
@@ -97,20 +105,20 @@ class AuthenticationViewModel(
       {
         is ExecutionResult.Success ->
         {
-          _toastMessage.value = "Logged in as ${email}."
+          _toastMessage.value =
+            "${context?.getString(R.string.text_signed_in_as)} ${email}."
           _isUserLoggedIn.value = true
         }
         is ExecutionResult.Error   -> _toastMessage.value =
-          result.exception?.message ?: result.message ?: "Error!"
+          result.exception?.message ?: result.message
+              ?: "${context?.getString(R.string.text_error)}!"
         is ExecutionResult.Task<*> ->
         {
           result.task.addOnSuccessListener {
             Toast.makeText(context, "Done!", Toast.LENGTH_SHORT).show()
             _isUserLoggedIn.value = true
           }.addOnFailureListener { ex ->
-            Toast
-              .makeText(context, "Error: ${ex.message}.", Toast.LENGTH_LONG)
-              .show()
+            Toast.makeText(context, "Error: ${ex.message}.", Toast.LENGTH_LONG).show()
           }
         }
       }
@@ -124,6 +132,14 @@ class AuthenticationViewModel(
       _toastMessage.value =
         context?.getString(R.string.text_fill_required_fields)
     }
+    else if (repository.validateEmail(email) != ValidationResult.Success || repository.validatePassword(
+        password
+      ) != ValidationResult.Success || repository.validateNickname(nickname) != ValidationResult.Success
+    )
+    {
+      _toastMessage.value =
+        context?.getString(R.string.text_incorrect_registration_data)
+    }
     else
     {
       when (val result = repository.register(
@@ -134,20 +150,19 @@ class AuthenticationViewModel(
       {
         is ExecutionResult.Success ->
         {
-          _toastMessage.value = "Registered as ${email}."
+          _toastMessage.value =
+            "${context?.getString(R.string.text_registered_as)} ${email}."
           _isUserLoggedIn.value = true
         }
         is ExecutionResult.Error   -> _toastMessage.value =
-          result.message ?: "Error!"
+          result.message ?: "${context?.getString(R.string.text_error)}!"
         is ExecutionResult.Task<*> ->
         {
           result.task.addOnSuccessListener {
             Toast.makeText(context, "Done!", Toast.LENGTH_SHORT).show()
             _isUserLoggedIn.value = true
           }.addOnFailureListener { ex ->
-            Toast
-              .makeText(context, "Error: ${ex.message}.", Toast.LENGTH_LONG)
-              .show()
+            Toast.makeText(context, "Error: ${ex.message}.", Toast.LENGTH_LONG).show()
           }
         }
       }
