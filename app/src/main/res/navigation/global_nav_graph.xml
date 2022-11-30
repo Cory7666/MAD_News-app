@@ -25,7 +25,14 @@
         android:id="@+id/homeScreen"
         android:name="org.cory7666.newsapp.ui.HomeScreen"
         android:label="fragment_home_screen"
-        tools:layout="@layout/fragment_home_screen" />
+        tools:layout="@layout/fragment_home_screen">
+        <action
+            android:id="@+id/action_homeScreen_to_splashScreen"
+            app:destination="@id/splashScreen" />
+        <action
+            android:id="@+id/action_homeScreen_to_settingsScreen"
+            app:destination="@id/settingsScreen" />
+    </fragment>
     <fragment
         android:id="@+id/identificationScreen"
         android:name="org.cory7666.newsapp.ui.identification.IdentificationScreen"
@@ -34,5 +41,14 @@
         <action
             android:id="@+id/action_identificationScreen_to_splashScreen"
             app:destination="@id/splashScreen" />
+    </fragment>
+    <fragment
+        android:id="@+id/settingsScreen"
+        android:name="org.cory7666.newsapp.SettingsScreen"
+        android:label="fragment_settings_screen"
+        tools:layout="@layout/fragment_settings_screen">
+        <action
+            android:id="@+id/action_settingsScreen_to_homeScreen"
+            app:destination="@id/homeScreen" />
     </fragment>
 </navigation>

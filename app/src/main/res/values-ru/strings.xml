@@ -20,4 +20,6 @@
     <string name="text_incorrect_registration_data">Данные для регистрации неверны</string>
     <string name="text_incorrect_sign_in_data">Данные для входа неверны</string>
     <string name="text_error">Ошибка</string>
+    <string name="text_home_screen_title">Главная</string>
+    <string name="text_settings_screen_title">Настройки</string>
 </resources>
