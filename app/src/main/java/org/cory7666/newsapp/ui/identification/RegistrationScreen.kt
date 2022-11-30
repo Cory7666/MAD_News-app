@@ -6,85 +6,76 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
-import android.widget.Button
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager2.widget.ViewPager2
-import com.google.android.material.textfield.TextInputLayout
 import org.cory7666.newsapp.R
+import org.cory7666.newsapp.databinding.FragmentRegistrationScreenBinding
 import org.cory7666.newsapp.viewmodel.AuthenticationViewModel
 
 class RegistrationScreen : Fragment()
 {
+  private lateinit var binding: FragmentRegistrationScreenBinding
   private lateinit var viewModel: AuthenticationViewModel
 
   override fun onCreateView(
     inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
-  ): View?
+  ): View
   {
     viewModel = ViewModelProvider(
       requireParentFragment()
     )[AuthenticationViewModel::class.java]
+    binding =
+      FragmentRegistrationScreenBinding.inflate(inflater, container, false)
 
-    val view = inflater.inflate(
-      R.layout.fragment_registration_screen, container, false
-    )
-
-    if (view != null)
-    {
-      val nicknameField = view.findViewById<TextInputLayout>(R.id.tilNickname)
-      val emailField = view.findViewById<TextInputLayout>(R.id.tilEmail)
-      val passwordField = view.findViewById<TextInputLayout>(R.id.tilPassword)
-      val actionButton = view.findViewById<Button>(R.id.buttonAction)
-
-      view.findViewById<Button>(R.id.buttonNextScreen)?.setOnClickListener {
-        nicknameField.editText?.text = null
-        emailField.editText?.text = null
-        passwordField.editText?.text = null
-        activity?.findViewById<ViewPager2>(R.id.viewPager)?.apply {
-          setCurrentItem(currentItem + 1, false)
-        }
+    binding.buttonNextScreen.setOnClickListener {
+      binding.tilNickname.editText?.text = null
+      binding.tilEmail.editText?.text = null
+      binding.tilPassword.editText?.text = null
+      activity?.findViewById<ViewPager2>(R.id.viewPager)?.apply {
+        setCurrentItem(currentItem + 1, false)
       }
-
-      nicknameField.editText?.setOnFocusChangeListener { _, _ ->
-        nicknameField.error = null
-      }
-      viewModel.nicknameHint.observe(this.viewLifecycleOwner) { value ->
-        nicknameField.error = value
-      }
-
-
-      emailField.editText?.setOnFocusChangeListener { _, _ ->
-        emailField.error = null
-      }
-      viewModel.emailHint.observe(this.viewLifecycleOwner) { value ->
-        emailField.error = value
-      }
-
-
-      passwordField.editText?.setOnFocusChangeListener { _, _ ->
-        passwordField.error = null
-      }
-      viewModel.passwordHint.observe(this.viewLifecycleOwner) { value ->
-        passwordField.error = value
-      }
-
-
-      actionButton.setOnClickListener {
-        viewModel.validateNickname(nicknameField.editText?.text.toString())
-        viewModel.validateEmail(emailField.editText?.text.toString())
-        viewModel.validatePassword(passwordField.editText?.text.toString())
-        viewModel.tryRegister(
-          nickname = nicknameField?.editText?.text.toString(),
-          email = emailField?.editText?.text.toString(),
-          password = passwordField.editText?.text.toString()
-        )
-      }
-
-      bindOnBackgroundClickAction(view)
     }
 
-    return view
+    binding.tilNickname.editText?.setOnFocusChangeListener { _, _ ->
+      binding.tilNickname.error = null
+    }
+    viewModel.nicknameHint.observe(this.viewLifecycleOwner) { value ->
+      binding.tilEmail.error = value
+    }
+
+
+    binding.tilEmail.editText?.setOnFocusChangeListener { _, _ ->
+      binding.tilEmail.error = null
+    }
+    viewModel.emailHint.observe(this.viewLifecycleOwner) { value ->
+      binding.tilEmail.error = value
+    }
+
+
+    binding.tilPassword.editText?.setOnFocusChangeListener { _, _ ->
+      binding.tilPassword.error = null
+    }
+    viewModel.passwordHint.observe(this.viewLifecycleOwner) { value ->
+      binding.tilPassword.error = value
+    }
+
+
+    binding.buttonAction.setOnClickListener {
+      viewModel.validateNickname(binding.tilNickname.editText?.text.toString())
+      viewModel.validateEmail(binding.tilEmail.editText?.text.toString())
+      viewModel.validatePassword(binding.tilPassword.editText?.text.toString())
+      viewModel.tryRegister(
+        nickname = binding.tilNickname.editText?.text.toString(),
+        email = binding.tilEmail.editText?.text.toString(),
+        password = binding.tilPassword.editText?.text.toString()
+      )
+    }
+
+    bindOnBackgroundClickAction(binding.root)
+
+
+    return binding.root
   }
 
   private fun hideKeyboard()

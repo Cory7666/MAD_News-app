@@ -9,20 +9,20 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import androidx.viewpager2.widget.ViewPager2
 import org.cory7666.newsapp.R
+import org.cory7666.newsapp.databinding.FragmentIdentificationScreenBinding
 import org.cory7666.newsapp.viewmodel.*
 
 class IdentificationScreen : Fragment()
 {
+  private lateinit var binding: FragmentIdentificationScreenBinding
+
   override fun onCreateView(
     inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
-  ): View?
+  ): View
   {
-    val viewFragment = inflater.inflate(
-      R.layout.fragment_identification_screen, container, false
-    )
-    val viewPager = viewFragment.findViewById<ViewPager2>(R.id.viewPager)
+    binding =
+      FragmentIdentificationScreenBinding.inflate(inflater, container, false)
 
     val mainActivityViewModel = ViewModelProvider(
       requireActivity(), MainActivityViewModelFactory()
@@ -37,12 +37,14 @@ class IdentificationScreen : Fragment()
       ViewModelProvider(this)[ActionBarViewModel::class.java].show()
     }
 
-    viewPager.adapter = AuthenticationScreenViewAdapter(
-      childFragmentManager,
-      lifecycle,
-      listOf(RegistrationScreen(), LoginScreen())
-    )
-    viewPager.currentItem = 0
+    with(binding.viewPager) {
+      adapter = AuthenticationScreenViewAdapter(
+        childFragmentManager,
+        lifecycle,
+        listOf(RegistrationScreen(), LoginScreen())
+      )
+      currentItem = 0
+    }
 
     authViewModel.isUserLoggedIn.observe(this.viewLifecycleOwner) { value ->
       if (value)
@@ -58,6 +60,6 @@ class IdentificationScreen : Fragment()
       }
     }
 
-    return viewFragment
+    return binding.root
   }
 }

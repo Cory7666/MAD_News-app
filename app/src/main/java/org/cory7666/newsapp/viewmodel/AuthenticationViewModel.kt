@@ -127,7 +127,7 @@ class AuthenticationViewModel(
 
   fun tryRegister(nickname: String?, email: String?, password: String?)
   {
-    if (nickname == null || nickname.isEmpty() || email == null || email.isEmpty() || password == null || password.isEmpty())
+    if (nickname.isNullOrEmpty() || email.isNullOrEmpty() || password.isNullOrEmpty())
     {
       _toastMessage.value =
         context?.getString(R.string.text_fill_required_fields)
@@ -162,7 +162,10 @@ class AuthenticationViewModel(
             Toast.makeText(context, "Done!", Toast.LENGTH_SHORT).show()
             _isUserLoggedIn.value = true
           }.addOnFailureListener { ex ->
-            Toast.makeText(context, "Error: ${ex.message}.", Toast.LENGTH_LONG).show()
+            ex.printStackTrace()
+            Toast
+              .makeText(context, "Error: ${ex.message}.", Toast.LENGTH_LONG)
+              .show()
           }
         }
       }

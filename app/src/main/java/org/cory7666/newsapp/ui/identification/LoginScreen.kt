@@ -6,74 +6,64 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
-import android.widget.Button
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager2.widget.ViewPager2
-import com.google.android.material.textfield.TextInputLayout
 import org.cory7666.newsapp.R
+import org.cory7666.newsapp.databinding.FragmentLoginScreenBinding
 import org.cory7666.newsapp.viewmodel.AuthenticationViewModel
 
 class LoginScreen : Fragment()
 {
+  private lateinit var binding: FragmentLoginScreenBinding
   private lateinit var viewModel: AuthenticationViewModel
 
   override fun onCreateView(
     inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
-  ): View?
+  ): View
   {
     viewModel = ViewModelProvider(
       requireParentFragment()
     )[AuthenticationViewModel::class.java]
+    binding = FragmentLoginScreenBinding.inflate(inflater, container, false)
 
-    val view =
-      inflater.inflate(R.layout.fragment_login_screen, container, false)
-
-    if (view != null)
-    {
-      val emailField = view.findViewById<TextInputLayout>(R.id.tilEmail)
-      val passwordField = view.findViewById<TextInputLayout>(R.id.tilPassword)
-      val actionButton = view.findViewById<Button>(R.id.buttonAction)
-
-      view.findViewById<Button>(R.id.buttonPrevScreen)?.setOnClickListener {
-        emailField.editText?.text = null
-        passwordField.editText?.text = null
-        activity?.findViewById<ViewPager2>(R.id.viewPager)?.apply {
-          setCurrentItem(currentItem - 1, false)
-        }
+    binding.buttonPrevScreen.setOnClickListener {
+      binding.tilEmail.editText?.text = null
+      binding.tilPassword.editText?.text = null
+      activity?.findViewById<ViewPager2>(R.id.viewPager)?.apply {
+        setCurrentItem(currentItem - 1, false)
       }
-
-
-
-      emailField.editText?.setOnFocusChangeListener { _, _ ->
-        emailField.error = null
-      }
-      passwordField.editText?.setOnFocusChangeListener { _, _ ->
-        passwordField.error = null
-      }
-
-      viewModel.emailHint.observe(this.viewLifecycleOwner) { value ->
-        emailField.error = value
-      }
-      viewModel.passwordHint.observe(this.viewLifecycleOwner) { value ->
-        passwordField.error = value
-      }
-
-
-
-      actionButton.setOnClickListener {
-        viewModel.validateEmail(emailField.editText?.text.toString())
-        viewModel.validatePassword(passwordField.editText?.text.toString())
-        viewModel.tryLogin(
-          email = emailField?.editText?.text.toString(),
-          password = passwordField.editText?.text.toString()
-        )
-      }
-
-      bindOnBackgroundClickAction(view)
     }
 
-    return view
+
+
+    binding.tilEmail.editText?.setOnFocusChangeListener { _, _ ->
+      binding.tilEmail.error = null
+    }
+    binding.tilPassword.editText?.setOnFocusChangeListener { _, _ ->
+      binding.tilPassword.error = null
+    }
+
+    viewModel.emailHint.observe(this.viewLifecycleOwner) { value ->
+      binding.tilEmail.error = value
+    }
+    viewModel.passwordHint.observe(this.viewLifecycleOwner) { value ->
+      binding.tilPassword.error = value
+    }
+
+
+
+    binding.buttonAction.setOnClickListener {
+      viewModel.validateEmail(binding.tilEmail.editText?.text.toString())
+      viewModel.validatePassword(binding.tilPassword.editText?.text.toString())
+      viewModel.tryLogin(
+        email = binding.tilEmail.editText?.text.toString(),
+        password = binding.tilPassword.editText?.text.toString()
+      )
+    }
+
+    bindOnBackgroundClickAction(binding.root)
+    return binding.root
   }
 
   private fun hideKeyboard()
