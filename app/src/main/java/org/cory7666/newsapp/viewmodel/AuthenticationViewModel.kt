@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.firebase.FirebaseException
 import com.google.firebase.auth.FirebaseAuthInvalidUserException
+import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import org.cory7666.newsapp.R
 import org.cory7666.newsapp.data.ExecutionResult
 import org.cory7666.newsapp.data.UserRepository
@@ -191,9 +192,10 @@ class AuthenticationViewModel(
   {
     return when (ex)
     {
-      is FirebaseAuthInvalidUserException -> "${context?.getString(R.string.text_invalid_user_data)}"
-      is FirebaseException                -> "${context?.getString(R.string.text_connection_with_server_error)}"
-      else                                -> null
+      is FirebaseAuthInvalidUserException   -> "${context?.getString(R.string.text_invalid_user_data)}"
+      is FirebaseAuthUserCollisionException -> "${context?.getString(R.string.text_user_already_exists)}"
+      is FirebaseException                  -> "${context?.getString(R.string.text_connection_with_server_error)}"
+      else                                  -> null
     }
   }
 }

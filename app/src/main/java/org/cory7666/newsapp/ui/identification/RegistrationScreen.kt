@@ -30,8 +30,11 @@ class RegistrationScreen : Fragment()
 
     binding.buttonNextScreen.setOnClickListener {
       binding.tilNickname.editText?.text = null
+      binding.tilNickname.error = null
       binding.tilEmail.editText?.text = null
+      binding.tilEmail.error = null
       binding.tilPassword.editText?.text = null
+      binding.tilPassword.error = null
       activity?.findViewById<ViewPager2>(R.id.viewPager)?.apply {
         setCurrentItem(currentItem + 1, false)
       }
