@@ -26,8 +26,9 @@ class HomeScreen : Fragment()
   {
     binding = FragmentHomeScreenBinding.inflate(inflater, container, false)
     viewModel = ViewModelProvider(this)[HomeScreenViewModel::class.java]
-    binding.recyclerView.layoutManager = LinearLayoutManager(context)
-    binding.recyclerView.adapter = HomeRecyclerAdapter(viewModel.newsList, this)
+    binding.newsRecyclerView.layoutManager = LinearLayoutManager(context)
+    binding.newsRecyclerView.adapter =
+      HomeNewsListRecyclerAdapter(viewModel.newsList, this)
 
     setupActionBar()
     update()

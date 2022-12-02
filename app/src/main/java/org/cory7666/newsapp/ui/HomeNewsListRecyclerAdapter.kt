@@ -17,9 +17,9 @@ import org.cory7666.newsapp.R
 import org.cory7666.newsapp.data.news.NewsInfo
 
 @SuppressLint("NotifyDataSetChanged")
-class HomeRecyclerAdapter(
+class HomeNewsListRecyclerAdapter(
   newsListLiveData: LiveData<List<NewsInfo>>, parent: Fragment
-) : RecyclerView.Adapter<HomeRecyclerAdapter.ViewHolder>()
+) : RecyclerView.Adapter<HomeNewsListRecyclerAdapter.ViewHolder>()
 {
   class ViewHolder(view: View) : RecyclerView.ViewHolder(view)
   {
@@ -37,7 +37,7 @@ class HomeRecyclerAdapter(
     this.context = parent.requireContext()
     this.newsList = newsListLiveData.value ?: emptyList()
     newsListLiveData.observe(parent) { newValue ->
-      this@HomeRecyclerAdapter.newsList = newValue
+      this@HomeNewsListRecyclerAdapter.newsList = newValue
       notifyDataSetChanged()
     }
   }
@@ -47,7 +47,7 @@ class HomeRecyclerAdapter(
     val itemView =
       LayoutInflater
         .from(parent.context)
-        .inflate(R.layout.home_recyclerview_item, parent, false)
+        .inflate(R.layout.home_news_recyclerview_item, parent, false)
     return ViewHolder(itemView)
   }
 
