@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
+import android.widget.ImageButton
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -47,7 +47,7 @@ class SettingsScreen : Fragment()
     )
 
     (requireActivity() as AppCompatActivity).supportActionBar?.customView
-      ?.findViewById<Button>(R.id.buttonGoToHomeScreen)
+      ?.findViewById<ImageButton>(R.id.buttonGoToHomeScreen)
       ?.setOnClickListener {
         findNavController().navigate(R.id.action_settingsScreen_to_homeScreen)
       }

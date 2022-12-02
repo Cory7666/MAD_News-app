@@ -8,12 +8,14 @@
         android:layout_height="wrap_content"
         android:layout_weight="3"
         android:text="@string/text_settings_screen_title"
-        android:textSize="34sp" />
+        android:textSize="34sp"
+        android:textStyle="bold" />
 
-    <Button
+    <ImageButton
         android:id="@+id/buttonGoToHomeScreen"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:text="@string/text_home_screen_title" />
+        android:contentDescription="@string/text_home_screen_title"
+        android:src="@drawable/ic_home_24" />
 </LinearLayout>

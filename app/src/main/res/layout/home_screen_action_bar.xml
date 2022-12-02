@@ -12,17 +12,19 @@
         android:textSize="34sp"
         android:textStyle="bold" />
 
-    <Button
+    <ImageButton
         android:id="@+id/buttonUpdate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:text="@string/text_update" />
+        android:contentDescription="@string/text_update"
+        android:src="@drawable/ic_update_24" />
 
-    <Button
+    <ImageButton
         android:id="@+id/buttonGoToSettings"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:text="@string/text_settings_screen_title" />
+        android:contentDescription="@string/text_settings_screen_title"
+        android:src="@drawable/ic_settings_24" />
 </LinearLayout>
