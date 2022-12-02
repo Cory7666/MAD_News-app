@@ -35,6 +35,7 @@ class SettingsScreen : Fragment()
     val activityViewModel =
       ViewModelProvider(requireActivity())[MainActivityViewModel::class.java]
     activityViewModel.repository.logout()
+    ViewModelProvider(requireActivity())[ActionBarViewModel::class.java].hide()
     findNavController().navigate(R.id.action_settingsScreen_to_splashScreen)
   }
 

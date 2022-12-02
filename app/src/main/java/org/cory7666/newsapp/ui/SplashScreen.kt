@@ -20,14 +20,19 @@ import org.cory7666.newsapp.viewmodel.MainActivityViewModelFactory
 @SuppressLint("CustomSplashScreen")
 class SplashScreen : Fragment()
 {
-  override fun onCreateView(
-    inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
-  ): View?
+  override fun onCreate(savedInstanceState: Bundle?)
   {
+    super.onCreate(savedInstanceState)
     ViewModelProvider(this)[ActionBarViewModel::class.java].apply {
       setCustomBarAndShow(0)
       hide()
     }
+  }
+
+  override fun onCreateView(
+    inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+  ): View?
+  {
     CoroutineScope(Dispatchers.Main).launch {
       delay(500)
 
