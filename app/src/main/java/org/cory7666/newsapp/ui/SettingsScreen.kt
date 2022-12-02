@@ -4,11 +4,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import org.cory7666.newsapp.R
 import org.cory7666.newsapp.databinding.FragmentSettingsScreenBinding
+import org.cory7666.newsapp.viewmodel.ActionBarViewModel
 import org.cory7666.newsapp.viewmodel.MainActivityViewModel
 
 class SettingsScreen : Fragment()
@@ -23,6 +26,7 @@ class SettingsScreen : Fragment()
     binding.buttonSignOutAction.setOnClickListener {
       signout()
     }
+    setupActionBar()
     return binding.root
   }
 
@@ -32,5 +36,20 @@ class SettingsScreen : Fragment()
       ViewModelProvider(requireActivity())[MainActivityViewModel::class.java]
     activityViewModel.repository.logout()
     findNavController().navigate(R.id.action_settingsScreen_to_splashScreen)
+  }
+
+  private fun setupActionBar()
+  {
+    val actionBarViewModel =
+      ViewModelProvider(requireActivity())[ActionBarViewModel::class.java]
+    actionBarViewModel.setCustomBarAndShow(
+      R.layout.settings_screen_action_bar
+    )
+
+    (requireActivity() as AppCompatActivity).supportActionBar?.customView
+      ?.findViewById<Button>(R.id.buttonGoToHomeScreen)
+      ?.setOnClickListener {
+        findNavController().navigate(R.id.action_settingsScreen_to_homeScreen)
+      }
   }
 }

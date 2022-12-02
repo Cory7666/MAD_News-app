@@ -24,7 +24,10 @@ class SplashScreen : Fragment()
     inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
   ): View?
   {
-    ViewModelProvider(this)[ActionBarViewModel::class.java].hide()
+    ViewModelProvider(this)[ActionBarViewModel::class.java].apply {
+      setCustomBarAndShow(0)
+      hide()
+    }
     CoroutineScope(Dispatchers.Main).launch {
       delay(500)
 

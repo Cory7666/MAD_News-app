@@ -34,7 +34,9 @@ class IdentificationScreen : Fragment()
     )[AuthenticationViewModel::class.java]
 
     activity?.run {
-      ViewModelProvider(this)[ActionBarViewModel::class.java].show()
+      ViewModelProvider(this)[ActionBarViewModel::class.java].setCustomBarAndShow(
+        0
+      )
     }
 
     with(binding.viewPager) {

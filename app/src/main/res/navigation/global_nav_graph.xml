@@ -46,6 +46,13 @@
         tools:layout="@layout/fragment_settings_screen">
         <action
             android:id="@+id/action_settingsScreen_to_splashScreen"
-            app:destination="@id/splashScreen" />
+            app:destination="@id/splashScreen"
+            app:popUpTo="@id/settingsScreen"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_settingsScreen_to_homeScreen"
+            app:destination="@id/homeScreen"
+            app:popUpTo="@id/settingsScreen"
+            app:popUpToInclusive="true" />
     </fragment>
 </navigation>

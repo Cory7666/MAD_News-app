@@ -24,4 +24,7 @@
     <string name="text_settings_screen_title">Настройки</string>
     <string name="text_logout">Выйти</string>
     <string name="text_open_in_source">Открыть источник</string>
+    <string name="text_invalid_user_data">Данные для входа неверны. Попробуйте ещё раз.</string>
+    <string name="text_connection_with_server_error">Невозможно соединиться с сервером.</string>
+    <string name="text_update">Обновить</string>
 </resources>

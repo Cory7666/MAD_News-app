@@ -25,4 +25,7 @@
     <string name="text_settings_screen_title">Settings</string>
     <string name="text_logout">Sign Out</string>
     <string name="text_open_in_source">Open in source</string>
+    <string name="text_invalid_user_data">Invalid user data. Try again.</string>
+    <string name="text_connection_with_server_error">Can\'t connect to the server.</string>
+    <string name="text_update">Update</string>
 </resources>
