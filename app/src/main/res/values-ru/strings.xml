@@ -22,4 +22,6 @@
     <string name="text_error">Ошибка</string>
     <string name="text_home_screen_title">Главная</string>
     <string name="text_settings_screen_title">Настройки</string>
+    <string name="text_logout">Выйти</string>
+    <string name="text_open_in_source">Открыть источник</string>
 </resources>
