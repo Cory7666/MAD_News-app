@@ -8,17 +8,21 @@ import com.kwabenaberko.newsapilib.models.response.ArticleResponse
 import org.cory7666.newsapp.R
 import org.cory7666.newsapp.data.news.NewsApiNewsProvider
 import org.cory7666.newsapp.data.news.NewsInfo
+import org.cory7666.newsapp.data.story.FirestoreStoryProvider
+import org.cory7666.newsapp.data.story.StoryInfo
 import java.util.*
 import java.util.stream.Collectors
 
 class HomeScreenViewModel : ViewModel()
 {
   private val _toastMessageText = MutableLiveData<Int>(0)
+  private val _storiesList = MutableLiveData<List<StoryInfo>>(LinkedList())
   private val _newsList = MutableLiveData<List<NewsInfo>>(LinkedList())
-  val newsList: LiveData<List<NewsInfo>> = _newsList
   val toastMessageText: LiveData<Int> = _toastMessageText
+  val storiesList: LiveData<List<StoryInfo>> = _storiesList
+  val newsList: LiveData<List<NewsInfo>> = _newsList
 
-  fun update()
+  fun updateNewsList()
   {
     NewsApiNewsProvider("e131c06345f444a1a953bff9c1f954e1",
       NewsApiNewsProvider.Language.RU,
@@ -26,9 +30,7 @@ class HomeScreenViewModel : ViewModel()
       {
         override fun onSuccess(response: ArticleResponse?)
         {
-          val newArticles =
-            response?.articles
-              ?.parallelStream()
+          val newArticles = response?.articles?.parallelStream()
               ?.map { x -> NewsInfo(x.title, x.description, x.url) }
               ?.collect(Collectors.toList()) ?: emptyList()
           _newsList.value = newArticles
@@ -40,5 +42,10 @@ class HomeScreenViewModel : ViewModel()
           _toastMessageText.value = R.string.text_network_error
         }
       }).getNews()
+  }
+
+  fun updateStoriesList()
+  {
+    FirestoreStoryProvider(_storiesList).get()
   }
 }

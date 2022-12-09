@@ -30,4 +30,6 @@
     <string name="text_update">Update</string>
     <string name="text_user_already_exists">User already exists.</string>
     <string name="text_network_error">Network error!</string>
+    <string name="text_description">Description</string>
+    <string name="text_story_fragment_title" translatable="false">Story</string>
 </resources>

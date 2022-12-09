@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import org.cory7666.newsapp.R
 import org.cory7666.newsapp.databinding.FragmentHomeScreenBinding
 import org.cory7666.newsapp.viewmodel.ActionBarViewModel
@@ -30,6 +31,13 @@ class HomeScreen : Fragment()
     binding.newsRecyclerView.layoutManager = LinearLayoutManager(context)
     binding.newsRecyclerView.adapter =
       HomeNewsListRecyclerAdapter(viewModel.newsList, this)
+
+    binding.storiesRecyclerView.layoutManager =
+      LinearLayoutManager(context).apply {
+        orientation = RecyclerView.HORIZONTAL
+      }
+    binding.storiesRecyclerView.adapter =
+      HomeStoriesRecyclerAdapter(viewModel, this)
 
     viewModel.toastMessageText.observe(viewLifecycleOwner) {
       if (it != 0)
@@ -65,6 +73,7 @@ class HomeScreen : Fragment()
 
   private fun update()
   {
-    viewModel.update()
+    viewModel.updateNewsList()
+    viewModel.updateStoriesList()
   }
 }
