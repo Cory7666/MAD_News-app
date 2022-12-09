@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -29,6 +30,14 @@ class HomeScreen : Fragment()
     binding.newsRecyclerView.layoutManager = LinearLayoutManager(context)
     binding.newsRecyclerView.adapter =
       HomeNewsListRecyclerAdapter(viewModel.newsList, this)
+
+    viewModel.toastMessageText.observe(viewLifecycleOwner) {
+      if (it != 0)
+      {
+        val message = context?.getString(it)
+        Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+      }
+    }
 
     setupActionBar()
     update()

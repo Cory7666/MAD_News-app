@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.kwabenaberko.newsapilib.NewsApiClient
 import com.kwabenaberko.newsapilib.models.response.ArticleResponse
+import org.cory7666.newsapp.R
 import org.cory7666.newsapp.data.news.NewsApiNewsProvider
 import org.cory7666.newsapp.data.news.NewsInfo
 import java.util.*
@@ -12,8 +13,10 @@ import java.util.stream.Collectors
 
 class HomeScreenViewModel : ViewModel()
 {
+  private val _toastMessageText = MutableLiveData<Int>(0)
   private val _newsList = MutableLiveData<List<NewsInfo>>(LinkedList())
   val newsList: LiveData<List<NewsInfo>> = _newsList
+  val toastMessageText: LiveData<Int> = _toastMessageText
 
   fun update()
   {
@@ -34,6 +37,7 @@ class HomeScreenViewModel : ViewModel()
         override fun onFailure(throwable: Throwable?)
         {
           throwable?.printStackTrace()
+          _toastMessageText.value = R.string.text_network_error
         }
       }).getNews()
   }

@@ -29,4 +29,5 @@
     <string name="text_connection_with_server_error">Can\'t connect to the server.</string>
     <string name="text_update">Update</string>
     <string name="text_user_already_exists">User already exists.</string>
+    <string name="text_network_error">Network error!</string>
 </resources>
