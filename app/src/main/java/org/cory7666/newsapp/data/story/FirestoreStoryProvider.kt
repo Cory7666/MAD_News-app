@@ -20,12 +20,15 @@ class FirestoreStoryProvider(
           val data = document.data
           list.add(
             StoryInfo(
-              data["title"] as String, data["description"] as String
+              data["title"] as String,
+              data["description"] as String,
+              data["source"] as String,
+              data["height"] as Long?
             )
           )
           Log.d(
             FirestoreStoryProvider::class.java.name,
-            "got story: ${data["title"]}|${data["description"]}",
+            "got story: ${data["title"]}|${data["description"]}|${data["source"]}",
           )
         }
         x.value = list

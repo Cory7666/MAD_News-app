@@ -6,12 +6,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.squareup.picasso.Picasso
 import org.cory7666.newsapp.R
 import org.cory7666.newsapp.data.story.StoryInfo
 import org.cory7666.newsapp.viewmodel.ActionBarViewModel
@@ -35,6 +37,11 @@ class StoryFragment : Fragment()
     val view = inflater.inflate(R.layout.fragment_story, container, false)
     view.findViewById<TextView>(R.id.descriptionTextView)?.text =
       "${story.description}"
+
+    val imageView = view.findViewById<ImageView>(R.id.imageView)
+    imageView.layoutParams.height = story.height?.toInt() ?: 100
+    Picasso.get().load(story.source).into(imageView)
+
     setupActionBar()
     return view
   }
