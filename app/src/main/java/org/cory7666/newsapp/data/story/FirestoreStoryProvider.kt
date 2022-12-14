@@ -22,7 +22,7 @@ class FirestoreStoryProvider(
             StoryInfo(
               data["title"] as String,
               data["description"] as String,
-              data["source"] as String,
+              data["source"] as List<String>,
               data["height"] as Long?
             )
           )

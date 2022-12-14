@@ -6,8 +6,8 @@
     android:orientation="vertical"
     tools:context=".ui.StoryFragment">
 
-    <ImageView
-        android:id="@+id/imageView"
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/imageViewPager"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:src="@tools:sample/avatars" />
