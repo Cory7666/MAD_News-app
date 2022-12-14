@@ -40,7 +40,12 @@ class StoryFragment : Fragment()
 
     val imageView = view.findViewById<ImageView>(R.id.imageView)
     imageView.layoutParams.height = story.height?.toInt() ?: 100
-    Picasso.get().load(story.source).into(imageView)
+    Picasso
+      .get()
+      .load(story.source)
+      .error(R.drawable.ic_baseline_error)
+      .placeholder(R.drawable.ic_baseline_downloading)
+      .into(imageView)
 
     setupActionBar()
     return view
