@@ -12,7 +12,6 @@ class FirestoreStoryProvider(
   {
     val db = FirebaseFirestore.getInstance()
     db.collection("story").get().addOnCompleteListener { result ->
-      Log.e("TAG", "get: ${result.isSuccessful}")
       if (result.isSuccessful)
       {
         val list = ArrayList<StoryInfo>(100)
@@ -23,6 +22,10 @@ class FirestoreStoryProvider(
             StoryInfo(
               data["title"] as String, data["description"] as String
             )
+          )
+          Log.d(
+            FirestoreStoryProvider::class.java.name,
+            "got story: ${data["title"]}|${data["description"]}",
           )
         }
         x.value = list

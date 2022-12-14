@@ -22,6 +22,7 @@ class HomeStoriesRecyclerAdapter(
   {
     viewModel.storiesList.observe(parent) {
       storiesContainer = it ?: emptyList<StoryInfo>()
+      notifyDataSetChanged()
     }
   }
 
