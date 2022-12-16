@@ -1,24 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="match_parent"
+    android:orientation="horizontal">
 
     <ImageButton
         android:id="@+id/buttonGoToHomeScreen"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:contentDescription="@string/text_home_screen_title"
-        android:src="@drawable/ic_baseline_arrow_back_24" />
+        app:srcCompat="@drawable/ic_baseline_arrow_back_24" />
 
     <TextView
         android:id="@+id/titleTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
+        android:layout_marginLeft="3dp"
         android:layout_weight="5"
-        android:text="@string/text_story_fragment_title"
-        android:textSize="34sp"
-        android:textStyle="bold" />
-
+        android:text="TextView"
+        android:textSize="34dp" />
 </LinearLayout>

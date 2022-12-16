@@ -32,6 +32,9 @@
         <action
             android:id="@+id/action_homeScreen_to_storyFragment"
             app:destination="@id/storyFragment" />
+        <action
+            android:id="@+id/action_homeScreen_to_webViewFragment"
+            app:destination="@id/webViewFragment" />
     </fragment>
     <fragment
         android:id="@+id/identificationScreen"
@@ -69,5 +72,17 @@
         <argument
             android:name="story"
             app:argType="org.cory7666.newsapp.data.story.StoryInfo" />
+    </fragment>
+    <fragment
+        android:id="@+id/webViewFragment"
+        android:name="org.cory7666.newsapp.ui.WebViewFragment"
+        android:label="fragment_web_view"
+        tools:layout="@layout/fragment_web_view">
+        <action
+            android:id="@+id/action_webViewFragment_to_homeScreen"
+            app:destination="@id/homeScreen" />
+        <argument
+            android:name="loadUrl"
+            app:argType="string" />
     </fragment>
 </navigation>

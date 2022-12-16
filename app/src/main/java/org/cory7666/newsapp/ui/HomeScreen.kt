@@ -73,7 +73,7 @@ class HomeScreen : Fragment()
 
   private fun update()
   {
-    viewModel.updateNewsList()
     viewModel.updateStoriesList()
+    viewModel.updateNewsList()
   }
 }

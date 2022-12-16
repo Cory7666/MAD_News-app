@@ -1,24 +1,22 @@
 package org.cory7666.newsapp.ui
 
 import android.annotation.SuppressLint
-import android.content.Context
-import android.content.Intent
-import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LiveData
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import org.cory7666.newsapp.R
 import org.cory7666.newsapp.data.news.NewsInfo
 
 @SuppressLint("NotifyDataSetChanged")
 class HomeNewsListRecyclerAdapter(
-  newsListLiveData: LiveData<List<NewsInfo>>, parent: Fragment
+  newsListLiveData: LiveData<List<NewsInfo>>,
+  private val recyclerHolder: Fragment
 ) : RecyclerView.Adapter<HomeNewsListRecyclerAdapter.ViewHolder>()
 {
   class ViewHolder(view: View) : RecyclerView.ViewHolder(view)
@@ -29,14 +27,12 @@ class HomeNewsListRecyclerAdapter(
       view.findViewById(R.id.buttonOpenInSource)
   }
 
-  private val context: Context
   var newsList: List<NewsInfo>
 
   init
   {
-    this.context = parent.requireContext()
     this.newsList = newsListLiveData.value ?: emptyList()
-    newsListLiveData.observe(parent) { newValue ->
+    newsListLiveData.observe(recyclerHolder) { newValue ->
       this@HomeNewsListRecyclerAdapter.newsList = newValue
       notifyDataSetChanged()
     }
@@ -57,9 +53,14 @@ class HomeNewsListRecyclerAdapter(
     holder.titleView.text = containerItem.title
     holder.descriptionView.text = containerItem.description
     holder.openInSourceButtonView.setOnClickListener {
+      /*
       ContextCompat.startActivity(
         context, Intent(Intent.ACTION_VIEW, Uri.parse(containerItem.url)), null
       )
+       */
+      val action =
+        HomeScreenDirections.actionHomeScreenToWebViewFragment(containerItem.url)
+      recyclerHolder.findNavController().navigate(action)
     }
   }
 
