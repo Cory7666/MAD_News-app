@@ -8,21 +8,21 @@ class NewsApiNewsProvider(
   private val apiKey: String,
   private val language: Language,
   private val callback: ArticlesResponseCallback
-) : NewsProvider<Void>
+) : NewsProvider<NewsInfo>
 {
-  override fun getNews(): List<Void>
-  {
-    NewsApiClient(apiKey).getEverything(
-      EverythingRequest.Builder().language(
-        language.code
-      ).q("all").build(), callback
-    )
-    return emptyList()
-  }
-
   enum class Language(val code: String)
   {
     RU("ru"),
     EN("en");
+  }
+
+  override fun getFew(page: Int, count: Int): List<NewsInfo>
+  {
+    NewsApiClient(apiKey).getEverything(
+      EverythingRequest.Builder().language(
+        language.code
+      ).q("all").page(page).pageSize(count).build(), callback
+    )
+    return emptyList()
   }
 }

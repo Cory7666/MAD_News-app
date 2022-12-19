@@ -62,8 +62,22 @@ class HomeScreen : Fragment()
       )
     )
 
+    binding.newsRecyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener()
+    {
+      override fun onScrollStateChanged(
+        recyclerView: RecyclerView, newState: Int
+      )
+      {
+        super.onScrollStateChanged(recyclerView, newState)
+        if (!recyclerView.canScrollVertically(RecyclerView.VERTICAL))
+        {
+          viewModel.updateNewsList()
+        }
+      }
+    })
+
     setupActionBar()
-    update()
+    fullUpdate()
 
     return binding.root
   }
@@ -81,12 +95,12 @@ class HomeScreen : Fragment()
         findNavController().navigate(R.id.action_homeScreen_to_settingsScreen)
       }
       findViewById<ImageButton>(R.id.buttonUpdate).setOnClickListener {
-        update()
+        fullUpdate()
       }
     }
   }
 
-  private fun update()
+  private fun fullUpdate()
   {
     viewModel.updateStoriesList()
     viewModel.updateNewsList()
