@@ -47,6 +47,13 @@ class HomeScreen : Fragment()
       }
     }
 
+    binding.swipeRefreshLayout.setOnRefreshListener {
+      viewModel.updateNewsList()
+    }
+    viewModel.isRefreshing.observe(viewLifecycleOwner) {
+      binding.swipeRefreshLayout.isRefreshing = it
+    }
+
     setupActionBar()
     update()
 
