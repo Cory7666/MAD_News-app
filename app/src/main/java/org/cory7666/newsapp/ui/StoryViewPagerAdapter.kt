@@ -7,14 +7,26 @@ import android.widget.ImageView
 import androidx.viewpager.widget.PagerAdapter
 import com.squareup.picasso.Picasso
 import org.cory7666.newsapp.R
+import kotlin.streams.toList
 
 class StoryViewPagerAdapter(
-  private val images: List<String>, private val context: Context?
+  images: List<String>, private val context: Context?
 ) : PagerAdapter()
 {
+  private val imageViews: List<ImageView> = images.stream().map { x ->
+    val iv = ImageView(context)
+    Picasso
+      .get()
+      .load(x)
+      .error(R.drawable.ic_baseline_error)
+      .placeholder(R.drawable.downloading_animation)
+      .into(iv)
+    return@map iv
+  }.toList()
+
   override fun getCount(): Int
   {
-    return images.size
+    return imageViews.size
   }
 
   override fun isViewFromObject(view: View, `object`: Any): Boolean
@@ -24,15 +36,8 @@ class StoryViewPagerAdapter(
 
   override fun instantiateItem(container: ViewGroup, position: Int): Any
   {
-    val view = ImageView(context)
-    Picasso
-      .get()
-      .load(images[position])
-      .error(R.drawable.ic_baseline_error)
-      .placeholder(R.drawable.ic_baseline_downloading)
-      .into(view)
-    container.addView(view)
-    return view
+    container.addView(imageViews[position])
+    return imageViews[position]
   }
 
   override fun destroyItem(container: ViewGroup, position: Int, `object`: Any)
