@@ -8,5 +8,16 @@
     <WebView
         android:id="@+id/parentWebView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent">
+
+    </WebView>
+
+    <ImageView
+        android:id="@+id/loadingProgressImageView"
+        android:layout_width="72dp"
+        android:layout_height="72dp"
+        android:src="@drawable/downloading_animation"
+        android:translationX="170dp"
+        android:translationY="330dp" />
+
 </FrameLayout>

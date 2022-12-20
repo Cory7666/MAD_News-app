@@ -1,5 +1,6 @@
 package org.cory7666.newsapp.ui
 
+import android.graphics.Bitmap
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +9,7 @@ import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -44,6 +46,22 @@ class WebViewFragment : Fragment()
       ): Boolean
       {
         return false
+      }
+
+      override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?)
+      {
+        super.onPageStarted(view, url, favicon)
+        binding.loadingProgressImageView.visibility = ImageView.VISIBLE
+        binding.loadingProgressImageView.translationX =
+          binding.parentWebView.width / 2 - binding.loadingProgressImageView.width / 2 + 0f
+        binding.loadingProgressImageView.translationY =
+          binding.parentWebView.height / 2 - binding.loadingProgressImageView.height / 2 + 0f
+      }
+
+      override fun onPageFinished(view: WebView?, url: String?)
+      {
+        super.onPageFinished(view, url)
+        binding.loadingProgressImageView.visibility = ImageView.INVISIBLE
       }
     }
     setupActionBar()
