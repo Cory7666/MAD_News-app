@@ -14,20 +14,40 @@ import org.cory7666.newsapp.data.story.StoryInfo
 import java.util.*
 import java.util.stream.Collectors
 import java.util.stream.Stream
+import kotlin.streams.toList
 
 class HomeScreenViewModel : ViewModel()
 {
-  private val perPageArticlesCount: Int = 10
-  private var pageNumber: Int = 1
-
   private val _toastMessageText = MutableLiveData<Int>(0)
   private val _storiesList = MutableLiveData<List<StoryInfo>>(LinkedList())
-  private val _newsList = MutableLiveData<List<NewsInfo>>(LinkedList())
+
+  companion object
+  {
+    private val perPageArticlesCount: Int = 10
+    private var pageNumber: Int = 1
+    private val _newsList = MutableLiveData<List<NewsInfo>>(LinkedList())
+  }
+
   private val _isRefreshing = MutableLiveData<Boolean>(false)
   val toastMessageText: LiveData<Int> = _toastMessageText
   val storiesList: LiveData<List<StoryInfo>> = _storiesList
   val newsList: LiveData<List<NewsInfo>> = _newsList
   val isRefreshing: LiveData<Boolean> = _isRefreshing
+
+  fun clearAndGetNews()
+  {
+    _newsList.value =
+      _newsList.value?.stream()?.limit(perPageArticlesCount + 0L)?.toList()
+    if (_newsList.value.isNullOrEmpty())
+    {
+      pageNumber = 1
+      updateNewsList()
+    }
+    else
+    {
+      pageNumber = 2
+    }
+  }
 
   fun updateNewsList()
   {
@@ -68,7 +88,14 @@ class HomeScreenViewModel : ViewModel()
           override fun onFailure(throwable: Throwable?)
           {
             throwable?.printStackTrace()
-            _toastMessageText.value = R.string.text_network_error
+            if (throwable?.message!!.startsWith("You have requested too many results."))
+            {
+              _toastMessageText.value = R.string.text_error_api_restriction;
+            }
+            else
+            {
+              _toastMessageText.value = R.string.text_network_error
+            }
             _isRefreshing.value = false
           }
         }).getFew(page = pageNumber, count = perPageArticlesCount)

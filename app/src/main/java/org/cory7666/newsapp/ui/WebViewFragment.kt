@@ -4,6 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.webkit.WebResourceRequest
+import android.webkit.WebView
+import android.webkit.WebViewClient
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -34,6 +37,15 @@ class WebViewFragment : Fragment()
   {
     binding = FragmentWebViewBinding.inflate(inflater, container, false)
     binding.parentWebView.loadUrl(loadUrl)
+    binding.parentWebView.webViewClient = object : WebViewClient()
+    {
+      override fun shouldOverrideUrlLoading(
+        view: WebView?, request: WebResourceRequest?
+      ): Boolean
+      {
+        return false
+      }
+    }
     setupActionBar()
     return binding.root
   }

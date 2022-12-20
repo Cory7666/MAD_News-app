@@ -32,4 +32,5 @@
     <string name="text_network_error">Network error!</string>
     <string name="text_description">Description</string>
     <string name="text_story_fragment_title" translatable="false">Story</string>
+    <string name="text_error_api_restriction">You have reached the API restriction.</string>
 </resources>

@@ -103,6 +103,6 @@ class HomeScreen : Fragment()
   private fun fullUpdate()
   {
     viewModel.updateStoriesList()
-    viewModel.updateNewsList()
+    viewModel.clearAndGetNews()
   }
 }
