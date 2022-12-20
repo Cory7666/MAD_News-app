@@ -94,9 +94,6 @@ class HomeScreen : Fragment()
       findViewById<ImageButton>(R.id.buttonGoToSettings)?.setOnClickListener {
         findNavController().navigate(R.id.action_homeScreen_to_settingsScreen)
       }
-      findViewById<ImageButton>(R.id.buttonUpdate).setOnClickListener {
-        fullUpdate()
-      }
     }
   }
 
