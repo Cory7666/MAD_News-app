@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="text_nickname">Отображаемое имя</string>
+    <string name="text_email">Эл. почта</string>
+    <string name="text_password">Пароль</string>
+    <string name="text_signup">Регистрация</string>
+    <string name="text_login">Вход</string>
+    <string name="text_login_action">Войти</string>
+    <string name="text_signup_action">Зарегистрироваться</string>
+    <string name="text_already_registered_action">Я уже зарегистрирован</string>
+    <string name="text_nevermind_action">Я передумал</string>
+    <string name="text_invalid_required_field">Необходимо заполнить</string>
+    <string name="text_invalid_email">Неверный адрес</string>
+    <string name="text_invalid_symbols_in_nickname">Неподходящие символы</string>
+    <string name="text_invalid_length_short">Нужно больше символов</string>
+    <string name="text_invalid_symbols_in_password">Неподходящие символы</string>
+    <string name="text_fill_required_fields">Заполните необходимые поля</string>
+    <string name="text_signed_in_as">Вошли как</string>
+    <string name="text_registered_as">Зарегистрирован как</string>
+    <string name="text_incorrect_registration_data">Данные для регистрации неверны</string>
+    <string name="text_incorrect_sign_in_data">Данные для входа неверны</string>
+    <string name="text_error">Ошибка</string>
+</resources>

@@ -1,3 +1,24 @@
 <resources>
-    <string name="app_name">MAD-news-app</string>
+    <string name="app_name" translatable="false">Read It</string>
+    <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
+    <string name="text_nickname">Nickname</string>
+    <string name="text_email">Email</string>
+    <string name="text_password">Password</string>
+    <string name="text_login">Log In</string>
+    <string name="text_signup">Sign Up</string>
+    <string name="text_login_action">Log In</string>
+    <string name="text_signup_action">Sign Up</string>
+    <string name="text_already_registered_action">I\'m already registered</string>
+    <string name="text_nevermind_action">Nevermind</string>
+    <string name="text_invalid_required_field">Required</string>
+    <string name="text_invalid_email">Invalid Email</string>
+    <string name="text_invalid_symbols_in_nickname">Invalid symbols</string>
+    <string name="text_invalid_length_short">Too short</string>
+    <string name="text_invalid_symbols_in_password">Invalid symbols</string>
+    <string name="text_fill_required_fields">Fill required fields</string>
+    <string name="text_signed_in_as">Signed in as</string>
+    <string name="text_registered_as">Registered as</string>
+    <string name="text_incorrect_registration_data">Incorrect registration data</string>
+    <string name="text_incorrect_sign_in_data">Incorrect sign in data</string>
+    <string name="text_error">Error</string>
 </resources>
