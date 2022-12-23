@@ -76,6 +76,11 @@ class HomeScreen : Fragment()
       }
     })
 
+    binding.rotatedSwipeRefreshLayout.isEnabled = false
+    viewModel.isReversedRefreshing.observe(viewLifecycleOwner) {
+      binding.rotatedSwipeRefreshLayout.isRefreshing = it
+    }
+
     setupActionBar()
     fullUpdate()
 

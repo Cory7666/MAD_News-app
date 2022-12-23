@@ -29,10 +29,12 @@ class HomeScreenViewModel : ViewModel()
   }
 
   private val _isRefreshing = MutableLiveData<Boolean>(false)
+  private val _isReversedRefreshing = MutableLiveData<Boolean>(false)
   val toastMessageText: LiveData<Int> = _toastMessageText
   val storiesList: LiveData<List<StoryInfo>> = _storiesList
   val newsList: LiveData<List<NewsInfo>> = _newsList
   val isRefreshing: LiveData<Boolean> = _isRefreshing
+  val isReversedRefreshing: LiveData<Boolean> = _isReversedRefreshing
 
   fun clearAndGetNews()
   {
@@ -41,6 +43,7 @@ class HomeScreenViewModel : ViewModel()
     if (_newsList.value.isNullOrEmpty())
     {
       pageNumber = 1
+      _isRefreshing.value = true
       updateNewsList()
     }
     else
@@ -51,55 +54,59 @@ class HomeScreenViewModel : ViewModel()
 
   fun updateNewsList()
   {
+    Log.d(
+      "TAG",
+      "updateNewsList: load articles page=${pageNumber}, count=${perPageArticlesCount}."
+    )
+
     if (!(_isRefreshing.value as Boolean))
     {
-      Log.d(
-        "TAG",
-        "updateNewsList: load articles page=${pageNumber}, count=${perPageArticlesCount}."
-      )
-      _isRefreshing.value = true
-
-      NewsApiNewsProvider("e131c06345f444a1a953bff9c1f954e1",
-        NewsApiNewsProvider.Language.RU,
-        object : NewsApiClient.ArticlesResponseCallback
-        {
-          override fun onSuccess(response: ArticleResponse?)
-          {
-            val newArticlesList =
-              response?.articles
-                ?.parallelStream()
-                ?.map { x -> NewsInfo(x.title, x.description, x.url) }
-                ?.collect(Collectors.toList())
-
-            val concatStream = Stream.concat(
-              _newsList.value?.stream(), newArticlesList?.stream()
-            )
-
-            if (!newArticlesList.isNullOrEmpty())
-            {
-              ++pageNumber
-            }
-
-            _newsList.value =
-              concatStream?.collect(Collectors.toList()) ?: emptyList()
-            _isRefreshing.value = false
-          }
-
-          override fun onFailure(throwable: Throwable?)
-          {
-            throwable?.printStackTrace()
-            if (throwable?.message!!.startsWith("You have requested too many results."))
-            {
-              _toastMessageText.value = R.string.text_error_api_restriction;
-            }
-            else
-            {
-              _toastMessageText.value = R.string.text_network_error
-            }
-            _isRefreshing.value = false
-          }
-        }).getFew(page = pageNumber, count = perPageArticlesCount)
+      _isReversedRefreshing.value = true
     }
+
+    NewsApiNewsProvider("e131c06345f444a1a953bff9c1f954e1",
+      NewsApiNewsProvider.Language.RU,
+      object : NewsApiClient.ArticlesResponseCallback
+      {
+        override fun onSuccess(response: ArticleResponse?)
+        {
+          val newArticlesList =
+            response?.articles
+              ?.parallelStream()
+              ?.map { x -> NewsInfo(x.title, x.description, x.url) }
+              ?.collect(Collectors.toList())
+
+          val concatStream = Stream.concat(
+            _newsList.value?.stream(), newArticlesList?.stream()
+          )
+
+          if (!newArticlesList.isNullOrEmpty())
+          {
+            ++pageNumber
+          }
+
+          _newsList.value =
+            concatStream?.collect(Collectors.toList()) ?: emptyList()
+          _isRefreshing.value = false
+          _isReversedRefreshing.value = false
+        }
+
+        override fun onFailure(throwable: Throwable?)
+        {
+          throwable?.printStackTrace()
+          if (throwable?.message!!.startsWith("You have requested too many results."))
+          {
+            _toastMessageText.value = R.string.text_error_api_restriction;
+          }
+          else
+          {
+            _toastMessageText.value = R.string.text_network_error
+          }
+          _isRefreshing.value = false
+          _isReversedRefreshing.value = false
+        }
+      }).getFew(page = pageNumber, count = perPageArticlesCount)
+
   }
 
   fun updateStoriesList()
