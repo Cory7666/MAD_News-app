@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel
 import com.kwabenaberko.newsapilib.NewsApiClient
 import com.kwabenaberko.newsapilib.models.response.ArticleResponse
 import org.cory7666.newsapp.R
-import org.cory7666.newsapp.data.news.NewsApiNewsProvider
+import org.cory7666.newsapp.data.news.NapiNewsProvider
 import org.cory7666.newsapp.data.news.NewsInfo
 import org.cory7666.newsapp.data.story.FirestoreStoryProvider
 import org.cory7666.newsapp.data.story.StoryInfo
@@ -64,8 +64,8 @@ class HomeScreenViewModel : ViewModel()
       _isReversedRefreshing.value = true
     }
 
-    NewsApiNewsProvider("e131c06345f444a1a953bff9c1f954e1",
-      NewsApiNewsProvider.Language.RU,
+    NapiNewsProvider("e131c06345f444a1a953bff9c1f954e1",
+      NapiNewsProvider.Language.RU,
       object : NewsApiClient.ArticlesResponseCallback
       {
         override fun onSuccess(response: ArticleResponse?)
@@ -105,7 +105,7 @@ class HomeScreenViewModel : ViewModel()
           _isRefreshing.value = false
           _isReversedRefreshing.value = false
         }
-      }).getFew(page = pageNumber, count = perPageArticlesCount)
+      }).getSomeNews(page = pageNumber, count = perPageArticlesCount)
 
   }
 
