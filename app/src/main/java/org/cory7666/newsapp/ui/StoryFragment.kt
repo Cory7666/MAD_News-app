@@ -56,7 +56,7 @@ class StoryFragment : Fragment()
     (requireActivity() as AppCompatActivity).supportActionBar?.customView?.apply {
       findViewById<TextView>(R.id.titleTextView)?.text = story.title.toString()
       findViewById<ImageButton>(R.id.buttonGoToHomeScreen)?.setOnClickListener {
-        findNavController().navigate(R.id.action_storyFragment_to_homeScreen)
+        findNavController().popBackStack()
       }
     }
   }

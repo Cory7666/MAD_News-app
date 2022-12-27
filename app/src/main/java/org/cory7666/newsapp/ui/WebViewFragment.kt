@@ -35,7 +35,7 @@ class WebViewFragment : Fragment()
 
   override fun onCreateView(
     inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
-  ): View?
+  ): View
   {
     binding = FragmentWebViewBinding.inflate(inflater, container, false)
     binding.parentWebView.loadUrl(loadUrl)
@@ -79,7 +79,7 @@ class WebViewFragment : Fragment()
     (requireActivity() as AppCompatActivity).supportActionBar?.customView?.apply {
       findViewById<TextView>(R.id.titleTextView)?.text = "Web"
       findViewById<ImageButton>(R.id.buttonGoToHomeScreen)?.setOnClickListener {
-        findNavController().navigate(R.id.action_webViewFragment_to_homeScreen)
+        findNavController().popBackStack()
       }
     }
   }

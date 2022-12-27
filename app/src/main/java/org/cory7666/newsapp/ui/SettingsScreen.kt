@@ -50,7 +50,7 @@ class SettingsScreen : Fragment()
     (requireActivity() as AppCompatActivity).supportActionBar?.customView
       ?.findViewById<ImageButton>(R.id.buttonGoToHomeScreen)
       ?.setOnClickListener {
-        findNavController().navigate(R.id.action_settingsScreen_to_homeScreen)
+        findNavController().popBackStack()
       }
   }
 }

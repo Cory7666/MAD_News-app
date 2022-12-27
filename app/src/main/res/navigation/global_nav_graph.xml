@@ -55,20 +55,12 @@
             app:destination="@id/splashScreen"
             app:popUpTo="@id/settingsScreen"
             app:popUpToInclusive="true" />
-        <action
-            android:id="@+id/action_settingsScreen_to_homeScreen"
-            app:destination="@id/homeScreen"
-            app:popUpTo="@id/settingsScreen"
-            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/storyFragment"
         android:name="org.cory7666.newsapp.ui.StoryFragment"
         android:label="fragment_story"
         tools:layout="@layout/fragment_story">
-        <action
-            android:id="@+id/action_storyFragment_to_homeScreen"
-            app:destination="@id/homeScreen" />
         <argument
             android:name="story"
             app:argType="org.cory7666.newsapp.data.story.StoryInfo" />
@@ -78,9 +70,6 @@
         android:name="org.cory7666.newsapp.ui.WebViewFragment"
         android:label="fragment_web_view"
         tools:layout="@layout/fragment_web_view">
-        <action
-            android:id="@+id/action_webViewFragment_to_homeScreen"
-            app:destination="@id/homeScreen" />
         <argument
             android:name="loadUrl"
             app:argType="string" />
