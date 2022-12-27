@@ -1,6 +1,6 @@
 package org.cory7666.newsapp.data.story
 
-interface StoryProvider<T>
+interface StoryProvider
 {
-  fun get(): List<T>
+  fun getAsync()
 }

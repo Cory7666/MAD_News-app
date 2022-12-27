@@ -19,6 +19,7 @@ class HomeScreenViewModel : ViewModel()
   private val newsRepository = NapiNewsProvider(
     "e131c06345f444a1a953bff9c1f954e1", NapiNewsProvider.Language.RU
   )
+  private val storyProvider = FirestoreStoryProvider()
 
   private val _toastMessageText = MutableLiveData<Int>(0)
   private val _storiesList = MutableLiveData<List<StoryInfo>>(LinkedList())
@@ -60,6 +61,14 @@ class HomeScreenViewModel : ViewModel()
       _isRefreshing.value = false
       _isReversedRefreshing.value = false
     }
+
+    storyProvider.stories.observeForever {
+      _storiesList.value = it
+    }
+
+    storyProvider.error.observeForever {
+      _toastMessageText.value = R.string.text_network_error
+    }
   }
 
   fun clearAndGetNews()
@@ -98,7 +107,7 @@ class HomeScreenViewModel : ViewModel()
 
   fun updateStoriesList()
   {
-    FirestoreStoryProvider(_storiesList).get()
+    storyProvider.getAsync()
   }
 
   companion object
