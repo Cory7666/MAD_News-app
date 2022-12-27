@@ -24,13 +24,11 @@ class HomeScreenViewModel : ViewModel()
   private val _toastMessageText = MutableLiveData<Int>(0)
   private val _storiesList = MutableLiveData<List<StoryInfo>>(LinkedList())
   private val _isRefreshing = MutableLiveData<Boolean>(false)
-  private val _isReversedRefreshing = MutableLiveData<Boolean>(false)
 
   val toastMessageText: LiveData<Int> = _toastMessageText
   val storiesList: LiveData<List<StoryInfo>> = _storiesList
   val newsList: LiveData<List<NewsInfo>> = _newsList
   val isRefreshing: LiveData<Boolean> = _isRefreshing
-  val isReversedRefreshing: LiveData<Boolean> = _isReversedRefreshing
 
   init
   {
@@ -43,7 +41,6 @@ class HomeScreenViewModel : ViewModel()
       ++pageNumber
 
       _isRefreshing.value = false
-      _isReversedRefreshing.value = false
     }
 
     newsRepository.error.observeForever {
@@ -59,7 +56,6 @@ class HomeScreenViewModel : ViewModel()
       }
 
       _isRefreshing.value = false
-      _isReversedRefreshing.value = false
     }
 
     storyProvider.stories.observeForever {
@@ -94,11 +90,6 @@ class HomeScreenViewModel : ViewModel()
       "TAG",
       "updateNewsList: load articles page=${pageNumber}, count=${perPageArticlesCount}."
     )
-
-    if (!(_isRefreshing.value as Boolean))
-    {
-      _isReversedRefreshing.value = true
-    }
 
     newsRepository.getSomeNewsAsync(
       page = pageNumber, count = perPageArticlesCount

@@ -18,23 +18,15 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-            android:id="@+id/rotatedSwipeRefreshLayout"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/newsRecyclerView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:rotationX="180">
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/newsRecyclerView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingLeft="16dp"
-                android:paddingRight="16dp"
-                android:rotationX="-180"
-                android:scrollbarStyle="insideOverlay"
-                android:scrollbars="vertical"
-                tools:listitem="@layout/home_news_recyclerview_item" />
-        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+            android:layout_height="wrap_content"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:scrollbarStyle="insideOverlay"
+            android:scrollbars="vertical"
+            tools:listitem="@layout/home_news_recyclerview_item" />
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 </LinearLayout>
