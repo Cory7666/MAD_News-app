@@ -31,15 +31,22 @@ class HomeScreen : Fragment()
     binding = FragmentHomeScreenBinding.inflate(inflater, container, false)
     viewModel = ViewModelProvider(this)[HomeScreenViewModel::class.java]
     binding.newsRecyclerView.layoutManager = LinearLayoutManager(context)
-    binding.newsRecyclerView.adapter =
-      HomeNewsListRecyclerAdapter(viewModel.newsList, this)
+    binding.newsRecyclerView.adapter = HomeNewsListRecyclerAdapter(this).apply {
+      viewModel.newsList.observe(viewLifecycleOwner) {
+        this.newsList = it ?: emptyList()
+      }
+    }
 
     binding.storiesRecyclerView.layoutManager =
       LinearLayoutManager(context).apply {
         orientation = RecyclerView.HORIZONTAL
       }
     binding.storiesRecyclerView.adapter =
-      HomeStoriesRecyclerAdapter(viewModel, this)
+      HomeStoriesRecyclerAdapter(this).apply {
+        viewModel.storiesList.observe(viewLifecycleOwner) {
+          storiesContainer = it
+        }
+      }
 
     viewModel.toastMessageText.observe(viewLifecycleOwner) {
       if (it != 0)
