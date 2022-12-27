@@ -12,14 +12,15 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import androidx.viewpager.widget.ViewPager
 import org.cory7666.newsapp.R
 import org.cory7666.newsapp.data.story.StoryInfo
+import org.cory7666.newsapp.databinding.FragmentStoryBinding
 import org.cory7666.newsapp.viewmodel.ActionBarViewModel
 
 class StoryFragment : Fragment()
 {
   private val args: StoryFragmentArgs by navArgs()
+  private lateinit var binding: FragmentStoryBinding
   private lateinit var story: StoryInfo
 
   override fun onCreate(savedInstanceState: Bundle?)
@@ -31,18 +32,17 @@ class StoryFragment : Fragment()
   @SuppressLint("SetTextI18n")
   override fun onCreateView(
     inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
-  ): View?
+  ): View
   {
-    val view = inflater.inflate(R.layout.fragment_story, container, false)
-    view.findViewById<TextView>(R.id.descriptionTextView)?.text =
-      "${story.description}"
-
-    val imageViewPager = view.findViewById<ViewPager>(R.id.imageViewPager)
-    imageViewPager.layoutParams.height = story.height?.toInt() ?: 100
-    imageViewPager.adapter = StoryViewPagerAdapter(story.sources, context)
+    binding = FragmentStoryBinding.inflate(inflater, container, false)
+    binding.descriptionTextView.text = story.description
+    binding.imageViewPager.apply {
+      layoutParams.height = story.height?.toInt() ?: 100
+      adapter = StoryViewPagerAdapter(story.sources, context)
+    }
 
     setupActionBar()
-    return view
+    return binding.root
   }
 
   private fun setupActionBar()
