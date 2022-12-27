@@ -13,11 +13,11 @@ class StoryViewPagerAdapter(
   images: List<String>, private val context: Context?
 ) : PagerAdapter()
 {
-  private val imageViews: List<ImageView> = images.stream().map { x ->
+  private val imageViews: List<ImageView> = images.stream().map { image ->
     val iv = ImageView(context)
     Picasso
       .get()
-      .load(x)
+      .load(image)
       .error(R.drawable.ic_baseline_error)
       .placeholder(R.drawable.downloading_animation)
       .into(iv)
