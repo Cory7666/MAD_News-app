@@ -30,23 +30,9 @@ class HomeScreen : Fragment()
   {
     binding = FragmentHomeScreenBinding.inflate(inflater, container, false)
     viewModel = ViewModelProvider(this)[HomeScreenViewModel::class.java]
-    binding.newsRecyclerView.layoutManager = LinearLayoutManager(context)
-    binding.newsRecyclerView.adapter = HomeNewsListRecyclerAdapter(this).apply {
-      viewModel.newsList.observe(viewLifecycleOwner) {
-        this.newsList = it ?: emptyList()
-      }
-    }
 
-    binding.storiesRecyclerView.layoutManager =
-      LinearLayoutManager(context).apply {
-        orientation = RecyclerView.HORIZONTAL
-      }
-    binding.storiesRecyclerView.adapter =
-      HomeStoriesRecyclerAdapter(this).apply {
-        viewModel.storiesList.observe(viewLifecycleOwner) {
-          storiesContainer = it
-        }
-      }
+    setupNewsRecyclerView()
+    setupStoriesRecyclerView()
 
     viewModel.toastMessageText.observe(viewLifecycleOwner) {
       if (it != 0)
@@ -62,26 +48,6 @@ class HomeScreen : Fragment()
     viewModel.isRefreshing.observe(viewLifecycleOwner) {
       binding.swipeRefreshLayout.isRefreshing = it
     }
-
-    binding.newsRecyclerView.addItemDecoration(
-      DividerItemDecoration(
-        binding.newsRecyclerView.context, LinearLayout.VERTICAL
-      )
-    )
-
-    binding.newsRecyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener()
-    {
-      override fun onScrollStateChanged(
-        recyclerView: RecyclerView, newState: Int
-      )
-      {
-        super.onScrollStateChanged(recyclerView, newState)
-        if (!recyclerView.canScrollVertically(RecyclerView.VERTICAL))
-        {
-          viewModel.updateNewsList()
-        }
-      }
-    })
 
     binding.rotatedSwipeRefreshLayout.isEnabled = false
     viewModel.isReversedRefreshing.observe(viewLifecycleOwner) {
@@ -113,5 +79,51 @@ class HomeScreen : Fragment()
   {
     viewModel.updateStoriesList()
     viewModel.clearAndGetNews()
+  }
+
+  private fun setupNewsRecyclerView()
+  {
+    binding.newsRecyclerView.apply {
+      layoutManager = LinearLayoutManager(context)
+      adapter = HomeNewsListRecyclerAdapter(this@HomeScreen).apply {
+        viewModel.newsList.observe(viewLifecycleOwner) {
+          this.newsList = it ?: emptyList()
+        }
+      }
+
+      addItemDecoration(
+        DividerItemDecoration(
+          this.context, LinearLayout.VERTICAL
+        )
+      )
+
+      addOnScrollListener(object : RecyclerView.OnScrollListener()
+      {
+        override fun onScrollStateChanged(
+          recyclerView: RecyclerView, newState: Int
+        )
+        {
+          super.onScrollStateChanged(recyclerView, newState)
+          if (!recyclerView.canScrollVertically(RecyclerView.VERTICAL))
+          {
+            viewModel.updateNewsList()
+          }
+        }
+      })
+    }
+  }
+
+  private fun setupStoriesRecyclerView()
+  {
+    binding.storiesRecyclerView.apply {
+      layoutManager = LinearLayoutManager(context).apply {
+        orientation = RecyclerView.HORIZONTAL
+      }
+      adapter = HomeStoriesRecyclerAdapter(this@HomeScreen).apply {
+        viewModel.storiesList.observe(viewLifecycleOwner) {
+          storiesContainer = it
+        }
+      }
+    }
   }
 }
