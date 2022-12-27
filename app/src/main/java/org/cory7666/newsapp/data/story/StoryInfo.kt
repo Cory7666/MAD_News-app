@@ -1,9 +1,8 @@
 package org.cory7666.newsapp.data.story
 
-class StoryInfo(
+data class StoryInfo(
   val title: String,
   val description: String,
   val sources: List<String>,
   val height: Long?
 ) : java.io.Serializable
-{}
