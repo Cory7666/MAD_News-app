@@ -38,9 +38,6 @@ class HomeNewsListRecyclerAdapter(
   }
 
   inner class LoaderViewHolder(view: View) : ViewHolder(view)
-  {
-
-  }
 
   var newsList: List<NewsInfo> = emptyList()
     set(value)
@@ -56,29 +53,27 @@ class HomeNewsListRecyclerAdapter(
 
   override fun getItemViewType(position: Int): Int
   {
-    return if (position < newsList.size) 0
-    else 1
+    return if (position < newsList.size) ArticleHolderViewId
+    else LoadingViewHolderId
   }
 
   override fun onCreateViewHolder(
     parent: ViewGroup, viewType: Int
   ): ViewHolder
   {
-    if (viewType == 0)
+    return when (viewType)
     {
-      val itemView =
+      ArticleHolderViewId -> ArticleHolderView(
         LayoutInflater
           .from(parent.context)
           .inflate(R.layout.home_news_recyclerview_item, parent, false)
-      return ArticleHolderView(itemView)
-    }
-    else
-    {
-      val itemView =
+      )
+      LoadingViewHolderId -> LoaderViewHolder(
         LayoutInflater
           .from(parent.context)
           .inflate(R.layout.loader_recyclerview_item, parent, false)
-      return LoaderViewHolder(itemView)
+      )
+      else                -> throw IllegalArgumentException("No View Holder of type ${viewType}.")
     }
   }
 
@@ -91,4 +86,10 @@ class HomeNewsListRecyclerAdapter(
   }
 
   override fun getItemCount(): Int = newsList.size + 1
+
+  companion object
+  {
+    private const val ArticleHolderViewId = 532621
+    private const val LoadingViewHolderId = -25864
+  }
 }

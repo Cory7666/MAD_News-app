@@ -33,22 +33,8 @@ class HomeScreen : Fragment()
 
     setupNewsRecyclerView()
     setupStoriesRecyclerView()
-
-    viewModel.toastMessageText.observe(viewLifecycleOwner) {
-      if (it != 0)
-      {
-        val message = context?.getString(it)
-        Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
-      }
-    }
-
-    binding.swipeRefreshLayout.setOnRefreshListener {
-      viewModel.updateNewsList()
-    }
-    viewModel.isRefreshing.observe(viewLifecycleOwner) {
-      binding.swipeRefreshLayout.isRefreshing = it
-    }
-
+    setupListeners()
+    setObservers()
     setupActionBar()
     fullUpdate()
 
@@ -119,6 +105,28 @@ class HomeScreen : Fragment()
           storiesContainer = it
         }
       }
+    }
+  }
+
+  private fun setupListeners()
+  {
+    binding.swipeRefreshLayout.setOnRefreshListener {
+      viewModel.updateNewsList()
+    }
+  }
+
+  private fun setObservers()
+  {
+    viewModel.toastMessageText.observe(viewLifecycleOwner) {
+      if (it != 0)
+      {
+        val message = context?.getString(it)
+        Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+      }
+    }
+
+    viewModel.isRefreshing.observe(viewLifecycleOwner) {
+      binding.swipeRefreshLayout.isRefreshing = it
     }
   }
 }
