@@ -20,4 +20,15 @@
     <string name="text_incorrect_registration_data">Данные для регистрации неверны</string>
     <string name="text_incorrect_sign_in_data">Данные для входа неверны</string>
     <string name="text_error">Ошибка</string>
+    <string name="text_home_screen_title">Главная</string>
+    <string name="text_settings_screen_title">Настройки</string>
+    <string name="text_logout">Выйти</string>
+    <string name="text_open_in_source">Открыть источник</string>
+    <string name="text_invalid_user_data">Данные для входа неверны. Попробуйте ещё раз.</string>
+    <string name="text_connection_with_server_error">Невозможно соединиться с сервером.</string>
+    <string name="text_update">Обновить</string>
+    <string name="text_user_already_exists">Пользователь уже существует.</string>
+    <string name="text_network_error">Ошибка сети!</string>
+    <string name="text_description">Описание</string>
+    <string name="text_error_api_restriction">Вы достигли ограничения API.</string>
 </resources>

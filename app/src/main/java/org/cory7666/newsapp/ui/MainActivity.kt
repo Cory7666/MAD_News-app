@@ -1,6 +1,7 @@
 package org.cory7666.newsapp.ui
 
 import android.os.Bundle
+import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import org.cory7666.newsapp.R
@@ -25,6 +26,18 @@ class MainActivity : AppCompatActivity()
       else
       {
         supportActionBar?.show()
+      }
+    }
+
+    actionBarViewModel.customActionBar.observe(this) {
+      if (it == 0)
+      {
+        supportActionBar?.displayOptions = ActionBar.DISPLAY_SHOW_TITLE
+      }
+      else
+      {
+        supportActionBar?.displayOptions = ActionBar.DISPLAY_SHOW_CUSTOM
+        supportActionBar?.setCustomView(it)
       }
     }
   }

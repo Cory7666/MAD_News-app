@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "309431219876",
-    "project_id": "mad-news-app",
-    "storage_bucket": "mad-news-app.appspot.com"
+    "project_number": "305578168516",
+    "project_id": "importantnews-f329a",
+    "storage_bucket": "importantnews-f329a.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:309431219876:android:16be2c71f6197d47be9831",
+        "mobilesdk_app_id": "1:305578168516:android:60cc2d85c1b5bdc1793991",
         "android_client_info": {
           "package_name": "org.cory7666.newsapp"
         }
       },
       "oauth_client": [
         {
-          "client_id": "309431219876-vgdatvub9787gp4h747n8kvrpihm5jkp.apps.googleusercontent.com",
+          "client_id": "305578168516-5akrua8fkc8qjfevgvve685ve3u5ackj.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDIA_45n1XieOyPBIItqALMJTR3yte8M-o"
+          "current_key": "AIzaSyAh2sLh0QXZX9lYGgmoPbAy_iCD4NXd71Y"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "309431219876-vgdatvub9787gp4h747n8kvrpihm5jkp.apps.googleusercontent.com",
+              "client_id": "305578168516-5akrua8fkc8qjfevgvve685ve3u5ackj.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

@@ -1,10 +1,12 @@
 package org.cory7666.newsapp.viewmodel
 
 import android.content.Context
-import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.google.firebase.FirebaseException
+import com.google.firebase.auth.FirebaseAuthInvalidUserException
+import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import org.cory7666.newsapp.R
 import org.cory7666.newsapp.data.ExecutionResult
 import org.cory7666.newsapp.data.UserRepository
@@ -109,16 +111,20 @@ class AuthenticationViewModel(
             "${context?.getString(R.string.text_signed_in_as)} ${email}."
           _isUserLoggedIn.value = true
         }
-        is ExecutionResult.Error   -> _toastMessage.value =
-          result.exception?.message ?: result.message
-              ?: "${context?.getString(R.string.text_error)}!"
+        is ExecutionResult.Error   ->
+        {
+          result.exception?.printStackTrace()
+          _toastMessage.value =
+            getUserFriendlyExecutionErrorReasonMessage(result)
+        }
         is ExecutionResult.Task<*> ->
         {
           result.task.addOnSuccessListener {
-            Toast.makeText(context, "Done!", Toast.LENGTH_SHORT).show()
+            _toastMessage.value = "Done!"
             _isUserLoggedIn.value = true
           }.addOnFailureListener { ex ->
-            Toast.makeText(context, "Error: ${ex.message}.", Toast.LENGTH_LONG).show()
+            ex.printStackTrace()
+            _toastMessage.value = getUserFriendlyExceptionReasonMessage(ex)
           }
         }
       }
@@ -154,21 +160,42 @@ class AuthenticationViewModel(
             "${context?.getString(R.string.text_registered_as)} ${email}."
           _isUserLoggedIn.value = true
         }
-        is ExecutionResult.Error   -> _toastMessage.value =
-          result.message ?: "${context?.getString(R.string.text_error)}!"
+        is ExecutionResult.Error   ->
+        {
+          result.exception?.printStackTrace()
+          _toastMessage.value =
+            getUserFriendlyExecutionErrorReasonMessage(result)
+        }
+
         is ExecutionResult.Task<*> ->
         {
           result.task.addOnSuccessListener {
-            Toast.makeText(context, "Done!", Toast.LENGTH_SHORT).show()
+            _toastMessage.value = "Done!"
             _isUserLoggedIn.value = true
           }.addOnFailureListener { ex ->
             ex.printStackTrace()
-            Toast
-              .makeText(context, "Error: ${ex.message}.", Toast.LENGTH_LONG)
-              .show()
+            _toastMessage.value = getUserFriendlyExceptionReasonMessage(ex)
           }
         }
       }
+    }
+  }
+
+  private fun getUserFriendlyExecutionErrorReasonMessage(result: ExecutionResult.Error): String
+  {
+    return getUserFriendlyExceptionReasonMessage(result.exception)
+      ?: result.message ?: result.exception?.message
+      ?: "${context?.getString(R.string.text_error)}"
+  }
+
+  private fun getUserFriendlyExceptionReasonMessage(ex: Exception?): String?
+  {
+    return when (ex)
+    {
+      is FirebaseAuthInvalidUserException   -> "${context?.getString(R.string.text_invalid_user_data)}"
+      is FirebaseAuthUserCollisionException -> "${context?.getString(R.string.text_user_already_exists)}"
+      is FirebaseException                  -> "${context?.getString(R.string.text_connection_with_server_error)}"
+      else                                  -> null
     }
   }
 }

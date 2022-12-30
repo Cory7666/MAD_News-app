@@ -6,17 +6,26 @@ import androidx.lifecycle.ViewModel
 
 class ActionBarViewModel : ViewModel()
 {
-  private val mHidden = MutableLiveData<Boolean>(true)
+  private val _hidden = MutableLiveData<Boolean>(true)
+  private val _customActionBar = MutableLiveData<Int>(0)
   val hidden: LiveData<Boolean>
-    get() = mHidden
+    get() = _hidden
+  val customActionBar: LiveData<Int>
+    get() = _customActionBar
 
   fun show()
   {
-    mHidden.value = false
+    _hidden.value = false
   }
 
   fun hide()
   {
-    mHidden.value = true
+    _hidden.value = true
+  }
+
+  fun setCustomBarAndShow(resource: Int)
+  {
+    _customActionBar.value = resource
+    show()
   }
 }
